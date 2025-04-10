@@ -25,7 +25,7 @@ export function FeatureSection() {
       </div>
 
       <div className="col-span-full flex flex-col gap-2">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-4 rounded-lg bg-gray-500 p-6 md:o-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-4 rounded-lg bg-gray-500 p-6 md:p-12">
           <div className="flex flex-col gap-4">
             <span className="text-body-tag text-blue-200 bg-blue-400 py-[6px] px-3 w-fit rounded-sm uppercase">
               Personalizável
