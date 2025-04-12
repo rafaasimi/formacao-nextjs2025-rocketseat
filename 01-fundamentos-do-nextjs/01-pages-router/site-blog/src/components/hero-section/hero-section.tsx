@@ -8,7 +8,7 @@ export function HeroSection() {
     <section className="mt-[calc(96px+32px)] md:mt-24 container relative flex items-center justify-center">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 min-h-[20rem] md:h-[36rem] items-center">
         <div className="flex flex-col items-center justify-center gap-8 md:items-start">
-          <h1 className="text-gray-100 text-heading-hg text-center md:text-left">
+          <h1 className="font-sans text-gray-100 text-heading-hg text-center md:text-left">
             Venda seus produtos como afiliado em um único lugar
           </h1>
 
