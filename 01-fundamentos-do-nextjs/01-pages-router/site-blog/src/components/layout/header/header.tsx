@@ -1,7 +1,7 @@
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import Link from "next/link";
-import { ActiveLink } from "../active-link";
-import { Logo } from "../logo";
+import { ActiveLink } from "../../active-link";
+import { Logo } from "../../logo";
 
 export function Header() {
   return (

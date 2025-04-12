@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Button } from "../ui/button";
 import { ArrowRight, Store } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function CallToAction() {
   return (
