@@ -1,0 +1,7 @@
+// Somente utilizado nos cursos
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "always",
+    "source.organizeImports.biome": "always"
+  }
+}
