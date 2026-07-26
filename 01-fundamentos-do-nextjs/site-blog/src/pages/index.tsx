@@ -1,10 +1,11 @@
-
+import { HeroSection } from "@/components/hero-section";
 
 export default function HomePage() {
   return (
-    <div
-      className={`flex min-h-screen items-center justify-center font-sans`}
-    >
-    </div>
+    <>
+      <article className="flex flex-col">
+        <HeroSection />
+      </article>
+    </>
   );
 }
