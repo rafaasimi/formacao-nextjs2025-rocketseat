@@ -1,3 +1,4 @@
+// Somente utilizado nos cursos
 {
   "editor.codeActionsOnSave": {
     "source.fixAll.biome": "always",
@@ -7,7 +8,5 @@
   "editor.quickSuggestions": {
     "strings": "on"
   },
-  "files.associations": {
-    "*.css": "tailwindcss"
-  }
+  "css.lint.unknownAtRules": "ignore"
 }

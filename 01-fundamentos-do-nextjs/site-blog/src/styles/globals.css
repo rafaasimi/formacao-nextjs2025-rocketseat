@@ -4,8 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: 'PT Sans Caption', sans-serif;
-  --font-inter: 'Inter', sans-serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-heading: 'PT Sans Caption', sans-serif;
 
   --radius-lg: 0.5rem;
   --radius-md: calc(0.5rem - 2px);
@@ -33,36 +33,42 @@
   font-size: 40px;
   line-height: 1.2;
   font-weight: 700;
+  font-family: var(--font-heading);
 }
 
 @utility text-heading-xl {
   font-size: 32px;
   line-height: 1.2;
   font-weight: 700;
+  font-family: var(--font-heading);
 }
 
 @utility text-heading-lg {
   font-size: 28px;
   line-height: 1.2;
   font-weight: 700;
+  font-family: var(--font-heading);
 }
 
 @utility text-heading-md {
   font-size: 24px;
   line-height: 1.2;
   font-weight: 700;
+  font-family: var(--font-heading);
 }
 
 @utility text-heading-sm {
   font-size: 20px;
   line-height: 1.2;
   font-weight: 700;
+  font-family: var(--font-heading);
 }
 
 @utility text-heading-xs {
   font-size: 16px;
   line-height: 1.2;
   font-weight: 700;
+  font-family: var(--font-heading);
 }
 
 @utility text-body-md {
@@ -81,6 +87,12 @@
   font-size: 12px;
   line-height: 1.5;
   font-weight: 400;
+}
+
+@utility text-body-tag {
+  font-size: 12px;
+  line-height: 100%;
+  font-weight: 500;
 }
 
 @utility text-action-md {
@@ -103,4 +115,8 @@
 
 html {
   background-color: var(--color-gray-700);
+}
+
+body {
+  font-family: var(--font-sans);
 }
