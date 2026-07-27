@@ -6,7 +6,7 @@ import { Logo } from "./logo";
 export function Header() {
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b-[1.5px] border-gray-500 bg-background/95 backdrop-blur supports-[backdrop-filters]:bg-background/60">
+    <header className="fixed top-0 z-50 w-full border-b-[1.5px] border-gray-500 bg-background/95 backdrop-blur supports-backdrop-filters:bg-background/60">
       <div className=" max-w-7xl mx-auto  sm:px-6 px-4 lg:px-8 py-5 md:py-8">
         <div className="flex h-16 items-center justify-between">
           <Logo />
