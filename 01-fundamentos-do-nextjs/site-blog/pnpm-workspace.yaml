@@ -1,4 +1,7 @@
 allowBuilds:
+  contentlayer: false
+  esbuild: false
+  protobufjs: false
   sharp: false
 ignoredBuiltDependencies:
   - sharp
