@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { Badge } from "./ui/badge";
 import Link from "next/link";
-import { buttonVariants } from "./ui/button";
 import { ArrowRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
 
 export function FeatureSection() {
 

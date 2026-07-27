@@ -1,4 +1,5 @@
 import { Inter, PT_Sans_Caption } from "next/font/google";
+import Head from "next/head";
 import { Footer } from "./footer";
 import { Header } from "./header";
 
@@ -21,6 +22,9 @@ const ptSansCaption = PT_Sans_Caption({
 export function Layout({ children }: LayoutProps) {
     return (
         <div className={`${inter.variable} ${ptSansCaption.variable} font-inter relative flex min-h-screen flex-col dark`}>
+            <Head>
+                <title>Site.Set - Landing Page e Blog</title>
+            </Head>
             <Header />
             <main className="flex-1 flex flex-col">
                 {children}
