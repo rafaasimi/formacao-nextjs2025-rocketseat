@@ -26,7 +26,7 @@ export function Layout({ children }: LayoutProps) {
                 <title>Site.Set - Landing Page e Blog</title>
             </Head>
             <Header />
-            <main className="flex-1 flex flex-col">
+            <main className="flex-1 flex flex-col mt-32">
                 {children}
             </main>
             <Footer />
