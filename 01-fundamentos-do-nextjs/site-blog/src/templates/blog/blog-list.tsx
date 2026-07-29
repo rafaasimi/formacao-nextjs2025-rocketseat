@@ -1,6 +1,7 @@
 import { Search } from "@/components/search";
 import { Badge } from "@/components/ui/badge";
 import { useRouter } from "next/router";
+import { PostCard } from "./components/post-card";
 
 export function BlogList() {
     const router = useRouter();
@@ -18,6 +19,15 @@ export function BlogList() {
                         <h1 className="text-gray-100 text-heading-lg md:text-heading-xl text-balance mt-3">{pageTitle}</h1>
                     </div>
                     <Search />
+                </div>
+
+                <div className="mt-6 md:mt-14 grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
+                    <PostCard />
+                    <PostCard />
+                    <PostCard />
+                    <PostCard />
+                    <PostCard />
+                    <PostCard />
                 </div>
             </div>
         </div>
