@@ -22,12 +22,17 @@ export function BlogList() {
                 </div>
 
                 <div className="mt-6 md:mt-14 grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
-                    <PostCard />
-                    <PostCard />
-                    <PostCard />
-                    <PostCard />
-                    <PostCard />
-                    <PostCard />
+                    <PostCard 
+                        title="Transformando seu negócio em uma loja virtual"
+                        description="Se você está buscando uma maneira simples e eficaz de vender seus produtos online, o Site.Set é a solução perfeita para você."
+                        image="/assets/primeiro-post.png"
+                        date="29/07/2026"
+                        author={{
+                            name: "Aspen Dokidis",
+                            avatar: "/customer-01.png"
+                        }}
+                        slug="transformando-seu-negocio-em-uma-loja-virtual"
+                    />
                 </div>
             </div>
         </div>
