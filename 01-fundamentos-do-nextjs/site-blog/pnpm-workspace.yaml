@@ -1,5 +1,6 @@
 allowBuilds:
   contentlayer: false
+  contentlayer2: false
   esbuild: false
   protobufjs: false
   sharp: false

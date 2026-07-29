@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { useRouter } from "next/router";
 import { PostCard } from "./components/post-card";
 import { PostGridCard } from "./components/post-grid-card";
+import { allPosts } from "contentlayer/generated";
 
 export function BlogList() {
     const router = useRouter();
@@ -10,6 +11,8 @@ export function BlogList() {
     const pageTitle = query
         ? `Resultados de busca para "${query}"`
         : 'Dicas e estratégias para impulsionar seu negócio';
+
+    const posts = allPosts;
 
     return (
         <div className="pt-5 pb-20 md:pt-20 md:pb-34">
@@ -24,17 +27,21 @@ export function BlogList() {
 
                 <div className="mt-6 md:mt-14">
                     <PostGridCard>
-                        <PostCard
-                            title="Transformando seu negócio em uma loja virtual"
-                            description="Se você está buscando uma maneira simples e eficaz de vender seus produtos online, o Site.Set é a solução perfeita para você."
-                            image="/assets/primeiro-post.png"
-                            date="29/07/2026"
-                            author={{
-                                name: "Aspen Dokidis",
-                                avatar: "/customer-01.png"
-                            }}
-                            slug="transformando-seu-negocio-em-uma-loja-virtual"
-                        />
+                        {posts && posts.map((post) => (
+                            <PostCard
+                                key={post._id}
+                                title={post.title}
+                                description={post.description}
+                                date={new Date(post.date).toLocaleDateString('pt-BR')}
+                                slug={post.slug}
+                                image={post.image.trim()}
+                                author={{
+                                    name: post.author.name,
+                                    avatar: post.author.avatar
+                                }}
+                            />
+                        ))}
+
                     </PostGridCard>
                 </div>
             </div>

@@ -17,9 +17,9 @@ interface PostCardProps {
 
 export function PostCard({ slug, title, description, image, date, author }: PostCardProps) {
     return (
-        <Link href={`/blog/${slug}`} className="group block">
+        <Link href={`/blog/${slug}`} className="group">
             {/* Post Content */}
-            <div className="relative p-2 rounded-lg bg-gray-600 border border-gray-400 group-hover:border-blue-500 transition-colors duration-200 overflow-hidden">
+            <div className="w-full h-full relative p-2 rounded-lg bg-gray-600 border border-gray-400 group-hover:border-blue-500 transition-colors duration-200 overflow-hidden">
 
                 {/* Data  */}
                 <div className="absolute top-0 right-0 z-10 pt-2.5 pr-3.5 pb-1.5 pl-2.5 rounded-bl-[10px] bg-gray-600">
@@ -29,7 +29,7 @@ export function PostCard({ slug, title, description, image, date, author }: Post
                 {/* Image Container */}
                 <div className="rounded-md overflow-hidden">
                     <Image
-                        src={image}
+                        src={image.trim()}
                         alt={title}
                         width={288}
                         height={144}
@@ -50,7 +50,7 @@ export function PostCard({ slug, title, description, image, date, author }: Post
                     {/* Autor */}
                     <div className="pt-3 mt-3 border-t border-gray-400 flex gap-2 items-center">
                         <Image
-                            src={author.avatar}
+                            src={author.avatar.trim()}
                             alt={`Foto de perfil de ${author.name}`}
                             width={20}
                             height={20}

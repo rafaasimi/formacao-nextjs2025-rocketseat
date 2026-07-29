@@ -2,7 +2,10 @@
 title: Guia essencial de segurança digital para pequenas empresas
 description: Proteger os dados da sua empresa e de seus clientes é fundamental. Aprenda as melhores práticas de cibersegurança para blindar seu negócio contra ameaças online.
 date: 2026-07-28 14:15:00
-image: /assets/seguranca-digital-guia.png
+image: https://picsum.photos/288/144
+author:
+    name: Rafael Simionato
+    avatar: https://github.com/rafaasimi.png
 ---
 
 Com o aumento constante dos ataques cibernéticos, a segurança da informação tornou-se uma prioridade estratégica para empresas de todos os tamanhos. Vazamentos de dados podem gerar prejuízos financeiros e danificar irreparavelmente a reputação de uma marca.

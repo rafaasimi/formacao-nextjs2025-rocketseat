@@ -2,7 +2,10 @@
 title: O que é arquitetura Serverless e por que você deve utilizá-la
 description: Conheça os conceitos do desenvolvimento sem servidor, entenda como economizar custos de infraestrutura e escalar sua aplicação sem dores de cabeça.
 date: 2026-07-29 11:45:00
-image: /assets/arquitetura-serverless.png
+image: https://picsum.photos/288/144
+author:
+    name: Rafael Simionato
+    avatar: https://github.com/rafaasimi.png
 ---
 
 O conceito de *Serverless* (arquitetura sem servidor) revolucionou a forma como construímos e hospedamos aplicações. Em vez de gerenciar e pagar por servidores dedicados 24/7, você executa o código apenas sob demanda.

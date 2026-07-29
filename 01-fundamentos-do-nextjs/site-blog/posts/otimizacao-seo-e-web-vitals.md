@@ -2,7 +2,10 @@
 title: Dominando a performance web e o SEO técnico
 description: Entenda como a velocidade do seu site e o Core Web Vitals afetam diretamente seu posicionamento no Google e a taxa de conversão dos seus visitantes.
 date: 2026-07-29 09:00:00
-image: /assets/seo-e-performance-web.png
+image: https://picsum.photos/288/144
+author:
+    name: Rafael Simionato
+    avatar: https://github.com/rafaasimi.png
 ---
 
 Um site bonito não é suficiente se demorar segundos para carregar. A velocidade de carregamento e a experiência de navegação são critérios decisivos para os motores de busca e para os seus usuários.
