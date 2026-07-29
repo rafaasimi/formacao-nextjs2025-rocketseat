@@ -2,6 +2,7 @@ import { Search } from "@/components/search";
 import { Badge } from "@/components/ui/badge";
 import { useRouter } from "next/router";
 import { PostCard } from "./components/post-card";
+import { PostGridCard } from "./components/post-grid-card";
 
 export function BlogList() {
     const router = useRouter();
@@ -21,18 +22,20 @@ export function BlogList() {
                     <Search />
                 </div>
 
-                <div className="mt-6 md:mt-14 grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
-                    <PostCard 
-                        title="Transformando seu negócio em uma loja virtual"
-                        description="Se você está buscando uma maneira simples e eficaz de vender seus produtos online, o Site.Set é a solução perfeita para você."
-                        image="/assets/primeiro-post.png"
-                        date="29/07/2026"
-                        author={{
-                            name: "Aspen Dokidis",
-                            avatar: "/customer-01.png"
-                        }}
-                        slug="transformando-seu-negocio-em-uma-loja-virtual"
-                    />
+                <div className="mt-6 md:mt-14">
+                    <PostGridCard>
+                        <PostCard
+                            title="Transformando seu negócio em uma loja virtual"
+                            description="Se você está buscando uma maneira simples e eficaz de vender seus produtos online, o Site.Set é a solução perfeita para você."
+                            image="/assets/primeiro-post.png"
+                            date="29/07/2026"
+                            author={{
+                                name: "Aspen Dokidis",
+                                avatar: "/customer-01.png"
+                            }}
+                            slug="transformando-seu-negocio-em-uma-loja-virtual"
+                        />
+                    </PostGridCard>
                 </div>
             </div>
         </div>
