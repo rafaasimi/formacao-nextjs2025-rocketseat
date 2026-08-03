@@ -2,7 +2,7 @@
 title: Tendências em desenvolvimento web que você precisa acompanhar
 description: Das aplicações Full-stack no front-end às APIs modernas, veja as tecnologias e arquiteturas que estão moldando o futuro da web.
 date: 2026-07-29 14:00:00
-image: https://picsum.photos/288/144
+image: https://picsum.photos/720/265
 author:
     name: Rafael Simionato
     avatar: https://github.com/rafaasimi.png

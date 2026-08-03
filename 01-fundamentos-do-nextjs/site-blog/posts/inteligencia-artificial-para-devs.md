@@ -2,7 +2,7 @@
 title: Como a IA está revolucionando o desenvolvimento de software
 description: Descubra como ferramentas baseadas em inteligência artificial estão transformando a rotina de programadores, aumentando a produtividade e acelerando a criação de produtos digitais.
 date: 2026-07-28 10:30:00
-image: https://picsum.photos/288/144
+image: https://picsum.photos/720/265
 author:
     name: Rafael Simionato
     avatar: https://github.com/rafaasimi.png

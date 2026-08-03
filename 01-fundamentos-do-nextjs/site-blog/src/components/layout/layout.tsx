@@ -2,6 +2,7 @@ import { Inter, PT_Sans_Caption } from "next/font/google";
 import Head from "next/head";
 import { Footer } from "./footer";
 import { Header } from "./header";
+import { CallToAction } from "@/templates/landing-page/sections/call-to-action";
 
 type LayoutProps = {
     children: React.ReactNode;
@@ -29,6 +30,7 @@ export function Layout({ children }: LayoutProps) {
             <main className="flex-1 flex flex-col mt-32">
                 {children}
             </main>
+            <CallToAction />
             <Footer />
         </div>
     )

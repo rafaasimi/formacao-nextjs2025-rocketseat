@@ -2,7 +2,7 @@
 title: Guia essencial de segurança digital para pequenas empresas
 description: Proteger os dados da sua empresa e de seus clientes é fundamental. Aprenda as melhores práticas de cibersegurança para blindar seu negócio contra ameaças online.
 date: 2026-07-28 14:15:00
-image: https://picsum.photos/288/144
+image: https://picsum.photos/720/265
 author:
     name: Rafael Simionato
     avatar: https://github.com/rafaasimi.png

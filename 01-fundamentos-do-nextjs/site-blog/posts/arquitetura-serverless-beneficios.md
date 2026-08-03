@@ -2,7 +2,7 @@
 title: O que é arquitetura Serverless e por que você deve utilizá-la
 description: Conheça os conceitos do desenvolvimento sem servidor, entenda como economizar custos de infraestrutura e escalar sua aplicação sem dores de cabeça.
 date: 2026-07-29 11:45:00
-image: https://picsum.photos/288/144
+image: https://picsum.photos/720/265
 author:
     name: Rafael Simionato
     avatar: https://github.com/rafaasimi.png

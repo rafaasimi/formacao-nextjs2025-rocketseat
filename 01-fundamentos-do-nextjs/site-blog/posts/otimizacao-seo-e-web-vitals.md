@@ -2,7 +2,7 @@
 title: Dominando a performance web e o SEO técnico
 description: Entenda como a velocidade do seu site e o Core Web Vitals afetam diretamente seu posicionamento no Google e a taxa de conversão dos seus visitantes.
 date: 2026-07-29 09:00:00
-image: https://picsum.photos/288/144
+image: https://picsum.photos/720/265
 author:
     name: Rafael Simionato
     avatar: https://github.com/rafaasimi.png

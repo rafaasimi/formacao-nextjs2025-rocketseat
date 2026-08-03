@@ -1,4 +1,3 @@
-import { CallToAction } from "./sections/call-to-action";
 import { CustomerStorySection } from "./sections/customer-story-section";
 import { FeatureSection } from "./sections/feature-seaction";
 import { HeroSection } from "./sections/hero-section";
@@ -12,7 +11,6 @@ export function LandingPage() {
             <FeatureSection />
             <SupportSection />
             <CustomerStorySection />
-            <CallToAction />
         </article>
     )
 }
