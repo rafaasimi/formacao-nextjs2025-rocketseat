@@ -1,6 +1,7 @@
 import { Avatar } from "@/components/avatar";
+import { Markdown } from "@/components/markdown";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { allPosts} from "contentlayer/generated";
+import { allPosts } from "contentlayer/generated";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -55,7 +56,9 @@ export default function BlogPost() {
                             </Avatar.Container>
                         </header>
 
-                        <div className="text-gray-200" dangerouslySetInnerHTML={{ __html: post?.body.html }} />
+                        <div className="prose prose-invert">
+                            <Markdown content={post.body.raw} />
+                        </div>
                     </div>
                 </article>
 
