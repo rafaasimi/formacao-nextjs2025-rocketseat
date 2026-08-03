@@ -45,9 +45,7 @@ export default function BlogPost() {
                                 <Avatar.Image
                                     src={post?.author.avatar.trimEnd()}
                                     alt={post?.author.name}
-                                    width={36}
-                                    height={36}
-                                    className="rounded-full border border-blue-200"
+                                    size="sm"
                                 />
                                 <Avatar.Content>
                                     <Avatar.Title>{post?.author.name}</Avatar.Title>

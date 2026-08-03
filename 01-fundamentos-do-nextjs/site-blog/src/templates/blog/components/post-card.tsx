@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { Avatar } from '@/components/avatar';
 
 type Author = {
     name: string;
@@ -49,14 +50,14 @@ export function PostCard({ slug, title, description, image, date, author }: Post
 
                     {/* Autor */}
                     <div className="pt-3 mt-3 border-t border-gray-400 flex gap-2 items-center">
-                        <Image
-                            src={author.avatar.trim()}
-                            alt={`Foto de perfil de ${author.name}`}
-                            width={20}
-                            height={20}
-                            className="rounded-full"
-                        />
-                        <span className="text-body-xs text-gray-300">{author.name}</span>
+                        <Avatar.Container>
+                            <Avatar.Image
+                                src={author.avatar.trimEnd()}
+                                alt={author.name}
+                                size="xs"
+                            />
+                            <Avatar.Title>{author.name}</Avatar.Title>
+                        </Avatar.Container>
                     </div>
                 </div>
 
