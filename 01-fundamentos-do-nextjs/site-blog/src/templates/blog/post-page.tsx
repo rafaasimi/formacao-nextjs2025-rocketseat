@@ -3,28 +3,18 @@ import { Markdown } from "@/components/markdown";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { useShare } from "@/hooks/use-share";
-import { allPosts } from "contentlayer/generated";
+import { Post as PostType } from "contentlayer/generated";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
-export function Post() {
-    const router = useRouter();
+type PostProps = {
+    post: PostType
+}
 
-    if (!router.isReady) {
-        return null;
-    }
-
-    const slug = router.query.slug as string;
-    const post = allPosts?.find((post) => post.slug.toLocaleLowerCase() === slug?.toLowerCase());
-
-    if (!post) {
-        return null;
-    }
+export function Post({ post }: PostProps) {
 
     const publishedDate = new Date(post?.date).toLocaleDateString('pt-BR');
-
-    const postUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`;
+    const postUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${post.slug}`;
 
     const { shareButtons } = useShare({
         url: postUrl,
