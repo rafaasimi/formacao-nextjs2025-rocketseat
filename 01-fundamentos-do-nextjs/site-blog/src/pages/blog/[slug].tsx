@@ -2,6 +2,7 @@ import { Avatar } from "@/components/avatar";
 import { Markdown } from "@/components/markdown";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
+import { useShare } from "@/hooks/use-share";
 import { allPosts } from "contentlayer/generated";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,14 +10,32 @@ import { useRouter } from "next/router";
 
 export default function BlogPost() {
     const router = useRouter();
+
+    if (!router.isReady) {
+        return null;
+    }
+
     const slug = router.query.slug as string;
-    const post = allPosts?.find((post) => post.slug.toLocaleLowerCase() === slug?.toLowerCase())!;
+    const post = allPosts?.find((post) => post.slug.toLocaleLowerCase() === slug?.toLowerCase());
+
+    if (!post) {
+        return null;
+    }
+
     const publishedDate = new Date(post?.date).toLocaleDateString('pt-BR');
+
+    const postUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`;
+
+    const { shareButtons } = useShare({
+        url: postUrl,
+        title: post.title,
+        text: post.description,
+    });
 
     return (
         <main className="container mt-12 mb-20 md:mb-34">
-            <div>
-                <Breadcrumb>
+            <div className="flex flex-wrap gap-4 items-center justify-between">
+                <Breadcrumb className="min-w-[200px] flex-1">
                     <BreadcrumbList className="flex-nowrap">
                         <BreadcrumbItem>
                             <BreadcrumbLink render={<Link href="/blog" className="text-gray-100 hover:text-blue-100">Blog</Link>} />
@@ -29,6 +48,20 @@ export default function BlogPost() {
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
+
+                <div className="flex gap-2 md:hidden">
+                    {shareButtons.map((provider) => (
+                        <Button
+                            key={provider.provider}
+                            variant={"outline"}
+                            size={"icon"}
+                            onClick={provider.action}
+                            
+                        >
+                            {provider.icon}
+                        </Button>
+                    ))}
+                </div>
             </div>
 
             <div className="mt-8 grid grid-cols-1 md:grid-cols-[1fr_14rem] gap-6">
@@ -62,18 +95,22 @@ export default function BlogPost() {
                 </article>
 
                 {/* Social */}
-                <aside className="space-y-6">
+                <aside className="space-y-6 hidden md:block">
                     <div>
                         <h2 className="mb-4 text-heading-xs text-gray-100">Compartilhar</h2>
 
                         <div className="space-y-3">
-                            {[{key: 1, name: "Facebook"}].map((provider) => (
-                                <Button 
-                                    key={provider.key}
+                            {shareButtons.map((provider) => (
+                                <Button
+                                    key={provider.provider}
                                     variant={"outline"}
                                     size={"sm"}
-                                    className="w-full"
-                                >{provider.name}</Button>
+                                    onClick={provider.action}
+                                    className="w-full justify-start gap-2"
+                                >
+                                    {provider.icon}
+                                    {provider.name}
+                                </Button>
                             ))}
                         </div>
                     </div>

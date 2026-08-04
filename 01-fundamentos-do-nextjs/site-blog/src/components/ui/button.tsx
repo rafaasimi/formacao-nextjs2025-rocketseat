@@ -18,7 +18,7 @@ const buttonVariants = cva(
         md:
           "text-action-md px-5 py-[12.5px]",
         sm: "text-action-sm px-4 py-[9.5px]",
-        icon: "h-10 w-10",
+        icon: "h-10 w-10 p-3",
       },
     },
     defaultVariants: {
