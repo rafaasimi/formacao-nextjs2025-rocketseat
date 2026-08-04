@@ -3,18 +3,22 @@ import { Badge } from "@/components/ui/badge";
 import { useRouter } from "next/router";
 import { PostCard } from "./components/post-card";
 import { PostGridCard } from "./components/post-grid-card";
-import { allPosts } from "contentlayer/generated";
+import { Post } from "contentlayer/generated";
 import { Inbox } from "lucide-react";
 
-export function BlogList() {
+type BlogListProps = {
+    posts: Post[]
+}
+
+export function BlogList({ posts }: BlogListProps) {
     const router = useRouter();
     const query = router.query.q as string;
     const pageTitle = query
         ? `Resultados de busca para "${query}"`
         : 'Dicas e estratégias para impulsionar seu negócio';
 
-    const posts = query ? allPosts.filter((post) => post.title.toLowerCase().includes(query.toLowerCase())) : allPosts;
-    const hasPosts = posts.length > 0;
+    const filteredPosts = query ? posts.filter((post) => post.title.toLowerCase().includes(query.toLowerCase())) : posts;
+    const hasPosts = filteredPosts.length > 0;
 
     return (
         <div className="pt-5 pb-20 md:pt-20 md:pb-34">
@@ -30,7 +34,7 @@ export function BlogList() {
                 <div className="mt-6 md:mt-14">
                     {hasPosts && (
                         <PostGridCard>
-                            {posts.map((post) => (
+                            {filteredPosts.map((post) => (
                                 <PostCard
                                     key={post._id}
                                     title={post.title}
@@ -49,7 +53,7 @@ export function BlogList() {
 
                     {!hasPosts && (
                         <div className="text-gray-100 flex items-center gap-2">
-                            <Inbox size={20} className="text-cyan-100"/>
+                            <Inbox size={20} className="text-cyan-100" />
                             <p >Nenhum post encontrado.</p>
                         </div>
                     )}
