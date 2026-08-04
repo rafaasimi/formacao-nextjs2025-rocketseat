@@ -1,6 +1,7 @@
 import { Avatar } from "@/components/avatar";
 import { Markdown } from "@/components/markdown";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
 import { allPosts } from "contentlayer/generated";
 import Image from "next/image";
 import Link from "next/link";
@@ -61,9 +62,22 @@ export default function BlogPost() {
                 </article>
 
                 {/* Social */}
-                <div>
-                    teste
-                </div>
+                <aside className="space-y-6">
+                    <div>
+                        <h2 className="mb-4 text-heading-xs text-gray-100">Compartilhar</h2>
+
+                        <div className="space-y-3">
+                            {[{key: 1, name: "Facebook"}].map((provider) => (
+                                <Button 
+                                    key={provider.key}
+                                    variant={"outline"}
+                                    size={"sm"}
+                                    className="w-full"
+                                >{provider.name}</Button>
+                            ))}
+                        </div>
+                    </div>
+                </aside>
             </div>
         </main>
     )
