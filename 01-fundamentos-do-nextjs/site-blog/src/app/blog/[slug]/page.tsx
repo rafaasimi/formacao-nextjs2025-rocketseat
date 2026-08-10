@@ -6,6 +6,14 @@ type BlogPageProps = {
     params: Promise<{ slug: string }>
 }
 
+export const revalidate = 60 * 60; // 1 hora
+
+export async function generateStaticParams() {
+    return allPosts.map((post) => ({
+        slug: post.slug,
+    }));
+}
+
 export default async function BlogPage({ params }: BlogPageProps) {
     const { slug } = await params;
     const post = allPosts.find((post) => post.slug === slug);
