@@ -4,14 +4,14 @@ import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Site.set",
-  description: "Venda seus produtos como afiliado em um único luigar",
+  description: "Venda seus produtos como afiliado em um único lugar",
   robots: {
     index: true,
     follow: true,
   },
   openGraph: {
     title: "Site.set",
-    description: "Venda seus produtos como afiliado em um único luigar",
+    description: "Venda seus produtos como afiliado em um único lugar",
     url: "https://formacao-nextjs2025-rocketseat.vercel.app/og-image.jpg",
     siteName: "Site.set",
     locale: "pt-BR",
