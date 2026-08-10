@@ -6,6 +6,7 @@ import { useShare } from "@/hooks/use-share";
 import { Post as PostType } from "contentlayer/generated";
 import Image from "next/image";
 import Link from "next/link";
+import { PostShare } from "./components/post-share";
 
 type PostProps = {
     post: PostType
@@ -15,12 +16,6 @@ export function Post({ post }: PostProps) {
 
     const publishedDate = new Date(post?.date).toLocaleDateString('pt-BR');
     const postUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${post.slug}`;
-
-    const { shareButtons } = useShare({
-        url: postUrl,
-        title: post.title,
-        text: post.description,
-    });
 
     return (
         <main className="container mt-12 mb-20 md:mb-34">
@@ -39,18 +34,12 @@ export function Post({ post }: PostProps) {
                     </BreadcrumbList>
                 </Breadcrumb>
 
-                <div className="flex gap-2 md:hidden">
-                    {shareButtons.map((provider) => (
-                        <Button
-                            key={provider.provider}
-                            variant={"outline"}
-                            size={"icon"}
-                            onClick={provider.action}
-
-                        >
-                            {provider.icon}
-                        </Button>
-                    ))}
+                <div className="block md:hidden">
+                    <PostShare
+                        postTitle={post.title}
+                        postDescription={post.description}
+                        postUrl={postUrl}
+                    />
                 </div>
             </div>
 
@@ -89,20 +78,11 @@ export function Post({ post }: PostProps) {
                     <div>
                         <h2 className="mb-4 text-heading-xs text-gray-100">Compartilhar</h2>
 
-                        <div className="space-y-3">
-                            {shareButtons.map((provider) => (
-                                <Button
-                                    key={provider.provider}
-                                    variant={"outline"}
-                                    size={"sm"}
-                                    onClick={provider.action}
-                                    className="w-full justify-start gap-2"
-                                >
-                                    {provider.icon}
-                                    {provider.name}
-                                </Button>
-                            ))}
-                        </div>
+                        <PostShare
+                            postTitle={post.title}
+                            postDescription={post.description}
+                            postUrl={postUrl}
+                        />
                     </div>
                 </aside>
             </div>
