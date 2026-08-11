@@ -3,18 +3,30 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter-sans);
+  --text-color: #000000;
+
+  --stroke-color: rgba(0, 0, 0, 0.5);
+
+  --surface-color: rgba(0, 0, 0, 0.05);
+  --surface-color-hover: rgba(0, 0, 0, 0.02);
+
+  --highlight-color: rgba(0, 0, 0, 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+
+    --text-color: #ffffff;
+
+    --stroke-color: rgba(255, 255, 255, 0.5);
+
+    --surface-color: rgba(255, 255, 255, 0.1);
+    --surface-color-hover: rgba(255, 255, 255, 0.05);
+
+    --highlight-color: rgba(255, 255, 255, 0.2);
   }
 }
 
@@ -22,4 +34,30 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-text: var(--text-color);
+  --color-stroke: var(--stroke-color);
+  --color-surface: var(--surface-color);
+  --color-surface-hover: var(--surface-color-hover);
+  --color-highlight: var(--highlight-color);
+
+  --font-sans: var(--font-inter-sans);
+}
+
+@utility text-body-md {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+  font-family: var(--font-sans);
+}
+
+@utility text-body-sm {
+  font-size: .875rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+  font-family: var(--font-sans);
 }
