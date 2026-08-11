@@ -12,6 +12,16 @@
   --surface-color-hover: rgba(0, 0, 0, 0.02);
 
   --highlight-color: rgba(0, 0, 0, 0.1);
+
+  --background-image: url("/bg-light-desktop.jpg");
+
+
+}
+
+@media (max-width: 425px) {
+  :root {
+    --background-image: url("/bg-light-mobile.jpg");
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,11 +37,22 @@
     --surface-color-hover: rgba(255, 255, 255, 0.05);
 
     --highlight-color: rgba(255, 255, 255, 0.2);
+
+    --background-image: url("/bg-dark-desktop.jpg");
+  }
+
+  @media (max-width: 425px) {
+    :root {
+      --background-image: url("/bg-dark-mobile.jpg");
+    }
   }
 }
 
 body {
-  background: var(--background);
+  background: var(--background-image);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
@@ -60,4 +81,10 @@ body {
   line-height: 1.5rem;
   font-weight: 400;
   font-family: var(--font-sans);
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  max-width: 36.75rem;
 }
