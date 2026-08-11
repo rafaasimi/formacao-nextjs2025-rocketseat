@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 
 const interSans = Inter({
   variable: "--font-inter-sans",
@@ -20,6 +21,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         {children}
+        <Script type="module" src="https://esm.sh/ionicons@latest/loader"/>
+        <Script noModule src="https://esm.sh/ionicons@latest/loader"/>
       </body>
     </html>
   );
