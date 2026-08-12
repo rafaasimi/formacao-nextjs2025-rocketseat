@@ -8,7 +8,7 @@ export interface PrismicDTO {
     },
     profile_picture_url?: FilledLinkToWebField,
     username: string | null;
-    bio_description: string;
+    bio_description: string | null;
     cards_links: {
         label: string;
         url: FilledLinkToWebField;

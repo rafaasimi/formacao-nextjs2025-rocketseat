@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@custom-variant hover (&:hover);
+
 :root {
   --text-color: #000000;
 
@@ -13,30 +17,26 @@
   --background-image: url("/bg-light-desktop.jpg");
 }
 
+:root.dark {
+  --text-color: #ffffff;
+
+  --stroke-color: rgba(255, 255, 255, 0.5);
+
+  --surface-color: rgba(255, 255, 255, 0.1);
+  --surface-color-hover: rgba(255, 255, 255, 0.05);
+
+  --highlight-color: rgba(255, 255, 255, 0.2);
+
+  --background-image: url("/bg-dark-desktop.jpg");
+}
+
 @media (max-width: 425px) {
   :root {
     --background-image: url("/bg-light-mobile.jpg");
   }
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text-color: #ffffff;
-
-    --stroke-color: rgba(255, 255, 255, 0.5);
-
-    --surface-color: rgba(255, 255, 255, 0.1);
-    --surface-color-hover: rgba(255, 255, 255, 0.05);
-
-    --highlight-color: rgba(255, 255, 255, 0.2);
-
-    --background-image: url("/bg-dark-desktop.jpg");
-  }
-
-  @media (max-width: 425px) {
-    :root {
-      --background-image: url("/bg-dark-mobile.jpg");
-    }
+  :root.dark {
+    --background-image: url("/bg-dark-mobile.jpg");
   }
 }
 

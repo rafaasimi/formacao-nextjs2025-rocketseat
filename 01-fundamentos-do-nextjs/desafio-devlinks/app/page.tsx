@@ -4,6 +4,8 @@ import { createClient } from "@/lib/prismicio";
 import { Avatar } from "./components/avatar";
 import { SocialIcon } from "./components/social-icon";
 import { PrismicDTO } from "./models/prismic-dto";
+import { Switch } from "@/components/ui/switch";
+import { ThemeSwitch } from "./components/theme-switch";
 
 export const revalidate = 3600; // 1 hora em segundos
 
@@ -23,37 +25,45 @@ export default async function Home() {
   return (
     <div className="container mt-14">
       <header className="flex flex-col gap-2 items-center mt-6 mb-6 text-center text-balance">
-        <Avatar src={avatarUrl} alt={dataPrismic.bio_description} fill />
+        <Avatar src={avatarUrl} alt={dataPrismic.bio_description || "Foto do perfil"} fill />
         {dataPrismic.username && <span className="text-body-md">@{dataPrismic.username}</span>}
-        <span className="text-body-sm line-clamp-2">{dataPrismic.bio_description}</span>
+        {dataPrismic.bio_description && <span className="text-body-sm line-clamp-2">{dataPrismic.bio_description}</span>}
       </header>
 
-      <main className="flex flex-col gap-4 py-6">
-        {cards.map((card) => (
-          <PrismicNextLink
-            key={card.label}
-            field={card.url}
-            className={buttonVariants({ variant: "primary" })}
-          >
-            {card.label}
-          </PrismicNextLink>
-        ))}
-      </main>
+      <div className="text-center">
+        <ThemeSwitch />
+      </div>
 
-      <footer>
-        <div className="flex flex-row gap-4 py-6 justify-center">
-          {socials.map((social) => (
+      {cards && (
+        <main className="flex flex-col gap-4 py-6">
+          {cards.map((card) => (
             <PrismicNextLink
-              key={social.label}
-              field={social.url}
-              className={buttonVariants({ variant: "icon" })}
-              aria-label={social.label}
-              title={social.label}
+              key={card.label}
+              field={card.url}
+              className={buttonVariants({ variant: "primary" })}
             >
-              <SocialIcon network={social.network} size={24} />
+              {card.label}
             </PrismicNextLink>
           ))}
-        </div>
+        </main>
+      )}
+
+      <footer>
+        {socials && (
+          <div className="flex flex-row gap-4 py-6 justify-center">
+            {socials.map((social) => (
+              <PrismicNextLink
+                key={social.label}
+                field={social.url}
+                className={buttonVariants({ variant: "icon" })}
+                aria-label={social.label}
+                title={social.label}
+              >
+                <SocialIcon network={social.network} size={24} />
+              </PrismicNextLink>
+            ))}
+          </div>
+        )}
 
         <p className="text-body-sm text-center py-6">
           Feito com <span className="animate-pulse text-red-500">&#10084;</span> por <a href="https://www.rafaelsimionato.dev/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Rafael Simionato</a>
