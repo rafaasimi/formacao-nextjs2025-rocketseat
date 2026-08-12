@@ -1,52 +1,58 @@
-import { Button } from "@/components/ui/button";
+import { PrismicNextLink } from "@prismicio/next";
+import { buttonVariants } from "@/components/ui/button";
+import { createClient } from "@/lib/prismicio";
 import { Avatar } from "./components/avatar";
-import { TwitchIcon } from "./components/icons/twitch-icon";
-import { LinkedinIcon } from "./components/icons/linkedin-icon";
-import { YoutubeIcon } from "./components/icons/youtube-icon";
-import { InstagramIcon } from "./components/icons/instagram-icon";
+import { SocialIcon } from "./components/social-icon";
+import { PrismicDTO } from "./models/prismic-dto";
 
-export default function Home() {
+export const revalidate = 3600; // 1 hora em segundos
+
+export default async function Home() {
+  const client = createClient();
+  const { data } = await client.getSingle("social_media");
+  const dataPrismic = data as PrismicDTO;
+
+  const profilePictureUrl = dataPrismic.profile_picture_url?.url;
+  const avatarUrl = profilePictureUrl?.startsWith("http")
+    ? profilePictureUrl
+    : `https://${profilePictureUrl}`;
+
+  const cards = dataPrismic.cards_links;
+  const socials = dataPrismic.social_links;
 
   return (
     <div className="container mt-14">
-      <header className="flex flex-col gap-2 items-center mt-6 mb-6">
-        <Avatar
-          src="https://github.com/rafaasimi.png"
-          alt="Rafael Simionato"
-          fill
-        />
-        <span className="text-body-md">@rafaasimi</span>
+      <header className="flex flex-col gap-2 items-center mt-6 mb-6 text-center text-balance">
+        <Avatar src={avatarUrl} alt={dataPrismic.bio_description} fill />
+        {dataPrismic.username && <span className="text-body-md">@{dataPrismic.username}</span>}
+        <span className="text-body-sm line-clamp-2">{dataPrismic.bio_description}</span>
       </header>
 
       <main className="flex flex-col gap-4 py-6">
-        <Button>
-          Inscreva-se no NLW
-        </Button>
-        <Button>
-          Baixe meu e-book
-        </Button>
-        <Button>
-          Veja meu portfólio
-        </Button>
-        <Button>
-          Conheça meu curso
-        </Button>
+        {cards.map((card) => (
+          <PrismicNextLink
+            key={card.label}
+            field={card.url}
+            className={buttonVariants({ variant: "primary" })}
+          >
+            {card.label}
+          </PrismicNextLink>
+        ))}
       </main>
 
       <footer>
         <div className="flex flex-row gap-4 py-6 justify-center">
-          <Button variant={"icon"}>
-            <TwitchIcon size={24} />
-          </Button>
-          <Button variant={"icon"}>
-            <LinkedinIcon size={24} />
-          </Button>
-          <Button variant={"icon"}>
-            <YoutubeIcon size={24} />
-          </Button>
-          <Button variant={"icon"}>
-            <InstagramIcon size={24} />
-          </Button>
+          {socials.map((social) => (
+            <PrismicNextLink
+              key={social.label}
+              field={social.url}
+              className={buttonVariants({ variant: "icon" })}
+              aria-label={social.label}
+              title={social.label}
+            >
+              <SocialIcon network={social.network} size={24} />
+            </PrismicNextLink>
+          ))}
         </div>
 
         <p className="text-body-sm text-center py-6">
