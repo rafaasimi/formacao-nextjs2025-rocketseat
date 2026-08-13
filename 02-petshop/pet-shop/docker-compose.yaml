@@ -1,4 +1,3 @@
-version: '4.86'
 services:
   postgres:
     image: postgres:18
@@ -11,7 +10,7 @@ services:
       POSTGRES_PASSWORD: petshop
       POSTGRES_DB: petshop
     volumes: 
-      - ./pgdata:/var/lib/postgresql/data
+      - ./pgdata:/var/lib/postgresql
 
 volumes:
   pgdata: 
