@@ -1,12 +1,7 @@
-// Somente utilizado nos cursos
 {
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.biome": "always",
-    "source.organizeImports.biome": "always"
-  },
-  "tailwindCSS.classFunctions": ["cva", "cn", "clsx"],
-  "editor.quickSuggestions": {
-    "strings": "on"
-  },
-  "css.lint.unknownAtRules": "ignore"
+    "source.fixAll.eslint": "explicit"
+  }
 }

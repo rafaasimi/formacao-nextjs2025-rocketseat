@@ -1,0 +1,16 @@
+pre-commit:
+  commands:
+    format:
+      root: '02-petshop/pet-shop/'
+      glob: '02-petshop/pet-shop/**/*.{js,jsx,ts,tsx,css,json,md}'
+      run: pnpm exec prettier --write {staged_files}
+      stage_fixed: true
+    typecheck:
+      root: '02-petshop/pet-shop/'
+      glob: '02-petshop/pet-shop/**/*.{ts,tsx}'
+      run: pnpm validate:typecheck
+
+pre-push:
+  commands:
+    typecheck:
+      run: pnpm --dir 02-petshop/pet-shop validate:typecheck
