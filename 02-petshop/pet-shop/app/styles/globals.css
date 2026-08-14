@@ -35,38 +35,38 @@
   --font-family-body: 'Inter', sans-serif;
 
   /* Title Typography */
-  --text-title-size: 24px;
-  --text-title-line-height: 32px;
+  --text-title-size: 1.5rem;
+  --text-title-line-height: 2rem;
   --text-title-weight: 700;
 
   /* Body Typography */
-  --text-paragraph-medium-size: 14px;
-  --text-paragraph-medium-line-height: 24px;
+  --text-paragraph-medium-size: 0.875rem;
+  --text-paragraph-medium-line-height: 1.5rem;
   --text-paragraph-medium-weight: 500;
 
-  --text-paragraph-small-size: 12px;
-  --text-paragraph-small-line-height: 16px;
+  --text-paragraph-small-size: 0.75rem;
+  --text-paragraph-small-line-height: 1rem;
   --text-paragraph-small-weight: 500;
 
-  --text-label-large-size: 16px;
-  --text-label-large-line-height: 24px;
+  --text-label-large-size: 1rem;
+  --text-label-large-line-height: 1.5rem;
   --text-label-large-weight: 700;
 
-  --text-label-medium-size: 14px;
-  --text-label-medium-line-height: 24px;
+  --text-label-medium-size: 0.875rem;
+  --text-label-medium-line-height: 1.5rem;
   --text-label-medium-weight: 700;
 
-  --text-label-small-size: 12px;
-  --text-label-small-line-height: 16px;
+  --text-label-small-size: 0.75rem;
+  --text-label-small-line-height: 1rem;
   --text-label-small-weight: 700;
 
-  --text-link-size: 12px;
-  --text-link-line-height: 16px;
+  --text-link-size: 0.75rem;
+  --text-link-line-height: 1rem;
   --text-link-weight: 500;
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 10px;
   --background: var(--color-background-primary);
   --foreground: var(--color-content-primary);
   --card: var(--color-background-secondary);
@@ -113,6 +113,11 @@
 
 /* Typography Utility Classes */
 @layer utilities {
+  .container {
+    max-width: 54.5rem;
+    margin: 0 auto;
+  }
+
   .text-title {
     font-family: var(--font-inter-tight), sans-serif;
     font-size: var(--text-title-size);
@@ -122,7 +127,7 @@
 
   .text-title-modal {
     font-family: var(--font-family-title);
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: 700;
     line-height: 1.2;
   }

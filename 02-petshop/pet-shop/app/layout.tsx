@@ -3,14 +3,20 @@ import { Inter, Inter_Tight } from 'next/font/google';
 import './styles/globals.css';
 import { cn } from '@/lib/utils';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  weight: ['400', '500', '700'],
+});
+
 const interTight = Inter_Tight({
   subsets: ['latin'],
   variable: '--font-inter-tight',
+  weight: ['700'],
 });
 
 export const metadata: Metadata = {
-  title: 'Agendamento Petshop',
+  title: 'Mundo Pet - Agendamento de serviços para petshop',
   description: 'Sistema de agendamento de serviços para petshop',
 };
 
@@ -25,7 +31,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         interTight.variable
       )}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col container">{children}</body>
     </html>
   );
 }
