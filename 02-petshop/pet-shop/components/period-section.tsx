@@ -1,10 +1,8 @@
+import { AppointmentPeriod } from '@/app/types/appointment';
 import { CloudSunIcon, HazeIcon, MoonStarIcon } from 'lucide-react';
 
 type PeriodSectionProps = {
-  period: {
-    title: string;
-    type: 'morning' | 'afternoon' | 'night';
-  };
+  period: AppointmentPeriod;
 };
 
 const periodIcons = {
@@ -14,6 +12,7 @@ const periodIcons = {
 };
 
 export function PeriodSection({ period }: PeriodSectionProps) {
+  console.log(period);
   return (
     <section className="bg-background-tertiary rounded-[10px]">
       <header className="flex items-center justify-between px-5 py-3.5 border-b border-[#2E2C30]">
@@ -25,7 +24,7 @@ export function PeriodSection({ period }: PeriodSectionProps) {
         </div>
         <div>
           <span className="text-label-large-size text-content-secondary">
-            09h-12h
+            {period.timeRange}
           </span>
         </div>
       </header>

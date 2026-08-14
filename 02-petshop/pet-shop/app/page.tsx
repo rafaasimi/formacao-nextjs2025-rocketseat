@@ -1,37 +1,114 @@
 import { PeriodSection } from '@/components/period-section';
+import {
+  Appointment,
+  AppointmentPeriod,
+  AppointmentPeriodTime,
+} from './types/appointment';
 
 const appointments = [
   {
-    id: '1',
+    id: 1,
     petName: 'Rex',
     tutorName: 'João',
     description: 'Consulta',
     phone: '1234567890',
-    scheduleAt: new Date('2025-08-17T10:00:00'),
+    scheduledAt: new Date('2025-08-17T10:00:00'),
   },
   {
-    id: '2',
+    id: 2,
     petName: 'Mimi',
     tutorName: 'Maria',
     description: 'Banho',
     phone: '1234567890',
-    scheduleAt: new Date('2025-08-17T11:00:00'),
+    scheduledAt: new Date('2025-08-17T11:00:00'),
   },
   {
-    id: '3',
+    id: 3,
     petName: 'Nina',
     tutorName: 'Natalia',
     description: 'Consulta',
     phone: '1234567890',
-    scheduleAt: new Date('2025-08-17T14:00:00'),
+    scheduledAt: new Date('2025-08-17T14:00:00'),
   },
   {
-    id: '4',
+    id: 4,
     petName: 'Nina',
     tutorName: 'Natalia',
     description: 'Consulta',
     phone: '1234567890',
-    scheduleAt: new Date('2025-08-17T19:00:00'),
+    scheduledAt: new Date('2025-08-17T19:00:00'),
+  },
+];
+
+const businessHours = {
+  morning: { start: 9, end: 12 },
+  afternoon: { start: 13, end: 18 },
+  night: { start: 19, end: 21 },
+};
+
+function getAppointmentPeriod(hour: number): AppointmentPeriodTime {
+  if (
+    hour >= businessHours.morning.start &&
+    hour <= businessHours.morning.end
+  ) {
+    return 'morning';
+  }
+  if (
+    hour >= businessHours.afternoon.start &&
+    hour <= businessHours.afternoon.end
+  ) {
+    return 'afternoon';
+  }
+  if (hour >= businessHours.night.start && hour <= businessHours.night.end) {
+    return 'night';
+  }
+  throw new Error(`Horário ${hour}h fora do expediente`);
+}
+
+function normalizeAppointments(appointments: Omit<Appointment, 'period'>[]) {
+  return appointments.map((appointment) => ({
+    ...appointment,
+    period: getAppointmentPeriod(appointment.scheduledAt.getHours()),
+  }));
+}
+
+function groupAppointmentsByPeriod(appointments: Appointment[]) {
+  return appointments.reduce<{
+    morning: Appointment[];
+    afternoon: Appointment[];
+    night: Appointment[];
+  }>(
+    (acc, appointment) => {
+      acc[appointment.period].push(appointment);
+      return acc;
+    },
+    { morning: [], afternoon: [], night: [] }
+  );
+}
+
+const normalizedAppointments = normalizeAppointments(appointments);
+const { morning, afternoon, night } = groupAppointmentsByPeriod(
+  normalizedAppointments
+);
+
+const periods: AppointmentPeriod[] | null = [
+  {
+    title: 'Manhã',
+    type: 'morning',
+    timeRange: `${businessHours.morning.start}h-${businessHours.morning.end}h`,
+    appointment: morning,
+  },
+  {
+    title: 'Tarde',
+    type: 'afternoon',
+    timeRange: `${businessHours.afternoon.start}h-${businessHours.afternoon.end}h`,
+    appointment: afternoon,
+  },
+  {
+    title: 'Noite',
+    type: 'night',
+    timeRange: `${businessHours.night.start}h-${businessHours.night.end}h`,
+    appointment: night,
   },
 ];
 
@@ -50,9 +127,10 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col gap-3">
-        <PeriodSection period={{ title: 'Manhã', type: 'morning' }} />
-        <PeriodSection period={{ title: 'Tarde', type: 'afternoon' }} />
-        <PeriodSection period={{ title: 'Noite', type: 'night' }} />
+        {periods &&
+          periods.map((period) => (
+            <PeriodSection key={period.type} period={period} />
+          ))}
       </div>
     </div>
   );
