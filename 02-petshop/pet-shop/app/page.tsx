@@ -4,6 +4,7 @@ import {
   AppointmentPeriod,
   AppointmentPeriodTime,
 } from './types/appointment';
+import prisma from '@/lib/prisma';
 
 const appointments = [
   {
@@ -128,7 +129,7 @@ const periods: AppointmentPeriod[] | null = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className="bg-background-primary px-5 py-3 md:px-20 md:py-15.5">
       <div className="flex flex-col gap-3 items-center md:flex-row mb-8">
