@@ -1,5 +1,6 @@
 import { AppointmentPeriod } from '@/app/types/appointment';
 import { CloudSunIcon, HazeIcon, MoonStarIcon } from 'lucide-react';
+import { twMerge } from 'tailwind-merge';
 
 type PeriodSectionProps = {
   period: AppointmentPeriod;
@@ -12,7 +13,6 @@ const periodIcons = {
 };
 
 export function PeriodSection({ period }: PeriodSectionProps) {
-  console.log(period);
   return (
     <section className="bg-background-tertiary rounded-[10px]">
       <header className="flex items-center justify-between px-5 py-3.5 border-b border-[#2E2C30]">
@@ -28,7 +28,46 @@ export function PeriodSection({ period }: PeriodSectionProps) {
           </span>
         </div>
       </header>
-      <main className="p-5">teste</main>
+      <main className="p-5 flex flex-col gap-4 md:gap-3 ">
+        {period.appointments.length > 0 ? (
+          <div>
+            {period.appointments.map((appointment, index) => (
+              <div
+                key={appointment.id}
+                className={twMerge(
+                  'p-3 md:px-3 md:py-4 text-paragraph-small-size grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4',
+                  index !== 0 && 'border-t border-border-divisor'
+                )}
+              >
+                <div className="flex gap-4">
+                  <span className="text-content-primary min-w-10">
+                    {appointment.scheduledAt.toLocaleTimeString('pt-BR', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </span>
+                  <span className="text-content-secondary md:flex-1">
+                    <span className="text-content-primary">
+                      {appointment.petName}
+                    </span>{' '}
+                    / {appointment.tutorName}
+                  </span>
+                  <span className="text-content-secondary md:flex-1">
+                    {appointment.description}
+                  </span>
+                </div>
+                <div className="text-end md:text-start">
+                  <span className="text-content-tertiary">
+                    Remover agendamento
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>Não há agendamentos para este período</p>
+        )}
+      </main>
     </section>
   );
 }

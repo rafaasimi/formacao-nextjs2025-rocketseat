@@ -8,7 +8,7 @@ export type AppointmentPeriod = {
   title: string;
   type: AppointmentPeriodTime;
   timeRange: string;
-  appointment: Appointment[];
+  appointments: Appointment[];
 };
 
 export type AppointmentPeriodTime = 'morning' | 'afternoon' | 'night';
