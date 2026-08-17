@@ -1,5 +1,6 @@
 allowBuilds:
   '@prisma/engines': false
+  core-js: true
   lefthook: false
   prisma: false
   sharp: false

@@ -5,6 +5,7 @@ import {
   AppointmentPeriodTime,
 } from './types/appointment';
 import prisma from '@/lib/prisma';
+import { AppointmentForm } from '@/components/appointment-form';
 
 const appointments = [
   {
@@ -148,6 +149,10 @@ export default async function Home() {
           periods.map((period) => (
             <PeriodSection key={period.type} period={period} />
           ))}
+      </div>
+
+      <div className="absolute bottom-8 right-8">
+        <AppointmentForm />
       </div>
     </div>
   );
