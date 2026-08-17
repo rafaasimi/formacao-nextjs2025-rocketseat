@@ -132,7 +132,7 @@ const periods: AppointmentPeriod[] | null = [
 
 export default async function Home() {
   return (
-    <div className="bg-background-primary px-5 py-3 md:px-20 md:py-15.5">
+    <div className="bg-background-primary px-5 py-3 md:px-20 md:py-15.5 mb-32 md:mb-0">
       <div className="flex flex-col gap-3 items-center md:flex-row mb-8">
         <div className="flex-1">
           <h1 className="text-title-size text-content-primary">Sua agenda</h1>
@@ -151,7 +151,7 @@ export default async function Home() {
           ))}
       </div>
 
-      <div className="absolute bottom-8 right-8">
+      <div className="fixed bottom-0 left-0 right-0 flex justify-center bg-[#23242C] py-[18px] px-6 md:bottom-6 md:right-6 md:left-auto md:top-auto md:w-auto md:bg-transparent md:p-0">
         <AppointmentForm />
       </div>
     </div>
