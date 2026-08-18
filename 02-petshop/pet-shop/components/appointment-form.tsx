@@ -6,13 +6,17 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from './ui/dialog';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Field, FieldError, FieldLabel } from './ui/field';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
+import { InputGroup, InputGroupAddon, InputGroupInput } from './ui/input-group';
+import { PawPrint, User } from 'lucide-react';
 
 const appointmentFormSchema = z.object({
   tutorName: z.string().min(3, 'O nome do tutor é obrigatório'),
@@ -61,13 +65,84 @@ export function AppointmentForm() {
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <input type="text" {...form.register('tutorName')} />
-          <input type="text" {...form.register('petName')} />
-          <input type="text" {...form.register('phone')} />
-          <input type="text" {...form.register('description')} />
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
+        >
+          <Field>
+            <FieldLabel htmlFor="tutorName">Nome do tutor</FieldLabel>
+            <InputGroup>
+              <InputGroupAddon>
+                <User className="size-5 text-content-brand" />
+              </InputGroupAddon>
+              <InputGroupInput
+                id="tutorName"
+                placeholder="Helena Souza"
+                aria-invalid={!!form.formState.errors.tutorName}
+                {...form.register('tutorName')}
+              />
+            </InputGroup>
+            <FieldError
+              errors={
+                form.formState.errors.tutorName
+                  ? [form.formState.errors.tutorName]
+                  : []
+              }
+            />
+          </Field>
 
-          <Button variant="brand" type="submit">
+          <Field>
+            <FieldLabel htmlFor="petName">Nome do pet</FieldLabel>
+            <InputGroup>
+              <InputGroupAddon>
+                <PawPrint className="size-5 text-content-brand" />
+              </InputGroupAddon>
+              <InputGroupInput
+                id="petName"
+                placeholder="Cheddar"
+                aria-invalid={!!form.formState.errors.petName}
+                {...form.register('petName')}
+              />
+            </InputGroup>
+            <FieldError
+              errors={
+                form.formState.errors.petName
+                  ? [form.formState.errors.petName]
+                  : []
+              }
+            />
+          </Field>
+
+          {/* <Field>
+            <FieldLabel htmlFor="phone">Telefone</FieldLabel>
+            <Input
+              id="phone"
+              placeholder="(00) 00000-0000"
+              aria-invalid={!!form.formState.errors.phone}
+              {...form.register('phone')}
+            />
+            <FieldError errors={form.formState.errors.phone ? [form.formState.errors.phone] : []} />
+          </Field> */}
+
+          <Field>
+            <FieldLabel htmlFor="description">Descrição do serviço</FieldLabel>
+            <Textarea
+              id="description"
+              placeholder="Banho e tosa"
+              aria-invalid={!!form.formState.errors.description}
+              {...form.register('description')}
+              className="resize-none"
+            />
+            <FieldError
+              errors={
+                form.formState.errors.description
+                  ? [form.formState.errors.description]
+                  : []
+              }
+            />
+          </Field>
+
+          <Button variant="brand" type="submit" className="mt-2 self-end">
             Agendar
           </Button>
         </form>
