@@ -8,6 +8,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
+export const inputGroupInputStyles = cn(
+  'flex h-12 w-full rounded-md border border-border-primary bg-background-tertiary px-3 py-2 text-sm text-content-primary ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-content-secondary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-0 focus-visible:ring-border-brand disabled:cursor-not-allowed disabled:opacity-50',
+  'hover:border-border-secondary',
+  'focus:border-border-brand focus-visible:border-border-brand',
+  'aria-invalid:ring-destructive/20 aria-invalid:border-destructive',
+  'flex-1 rounded-none border-0 bg-transparent shadow-none ring-0 focus-visible:ring-0 aria-invalid:ring-0 dark:bg-transparent'
+);
+
 function InputGroup({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -123,10 +131,7 @@ function InputGroupInput({
   return (
     <Input
       data-slot="input-group-control"
-      className={cn(
-        'flex-1 rounded-none border-0 bg-transparent shadow-none ring-0 focus-visible:ring-0 aria-invalid:ring-0 dark:bg-transparent',
-        className
-      )}
+      className={cn(inputGroupInputStyles, className)}
       {...props}
     />
   );

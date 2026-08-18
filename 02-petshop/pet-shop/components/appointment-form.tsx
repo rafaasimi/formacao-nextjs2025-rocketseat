@@ -13,10 +13,15 @@ import {
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Field, FieldError, FieldLabel } from './ui/field';
-import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
-import { InputGroup, InputGroupAddon, InputGroupInput } from './ui/input-group';
-import { PawPrint, User } from 'lucide-react';
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+  inputGroupInputStyles,
+} from './ui/input-group';
+import { PawPrint, Phone, User } from 'lucide-react';
+import { IMaskInput } from 'react-imask';
 
 const appointmentFormSchema = z.object({
   tutorName: z.string().min(3, 'O nome do tutor é obrigatório'),
@@ -113,16 +118,28 @@ export function AppointmentForm() {
             />
           </Field>
 
-          {/* <Field>
+          <Field>
             <FieldLabel htmlFor="phone">Telefone</FieldLabel>
-            <Input
-              id="phone"
-              placeholder="(00) 00000-0000"
-              aria-invalid={!!form.formState.errors.phone}
-              {...form.register('phone')}
+            <InputGroup>
+              <InputGroupAddon>
+                <Phone className="size-5 text-content-brand" />
+              </InputGroupAddon>
+              <IMaskInput
+                id="phone"
+                placeholder="(00) 00000-0000"
+                mask="(00) 00000-0000"
+                data-slot="input-group-control"
+                aria-invalid={!!form.formState.errors.phone}
+                className={inputGroupInputStyles}
+                {...form.register('phone')}
+              />
+            </InputGroup>
+            <FieldError
+              errors={
+                form.formState.errors.phone ? [form.formState.errors.phone] : []
+              }
             />
-            <FieldError errors={form.formState.errors.phone ? [form.formState.errors.phone] : []} />
-          </Field> */}
+          </Field>
 
           <Field>
             <FieldLabel htmlFor="description">Descrição do serviço</FieldLabel>
