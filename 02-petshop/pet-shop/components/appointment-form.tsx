@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from './ui/dialog';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Field, FieldError, FieldLabel } from './ui/field';
 import { Textarea } from './ui/textarea';
@@ -20,14 +20,29 @@ import {
   InputGroupInput,
   inputGroupInputStyles,
 } from './ui/input-group';
-import { PawPrint, Phone, User } from 'lucide-react';
+import {
+  CalendarIcon,
+  ChevronDownIcon,
+  PawPrint,
+  Phone,
+  User,
+} from 'lucide-react';
 import { IMaskInput } from 'react-imask';
+import { format, startOfToday } from 'date-fns';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { Calendar } from './ui/calendar';
+import { cn } from '@/lib/utils';
 
 const appointmentFormSchema = z.object({
   tutorName: z.string().min(3, 'O nome do tutor é obrigatório'),
   petName: z.string().min(3, 'O nome do pet é obrigatório'),
   phone: z.string().min(11, 'O telefone do tutor é obrigatório'),
   description: z.string().min(3, 'A descrição do atendimento é obrigatória'),
+  scheduledAt: z
+    .date({
+      error: 'A data do agendamento é obrigatória',
+    })
+    .min(startOfToday(), 'A data do agendamento não pode ser no passado'),
 });
 
 type AppointmentFormData = z.infer<typeof appointmentFormSchema>;
@@ -44,6 +59,7 @@ export function AppointmentForm() {
       petName: '',
       phone: '',
       description: '',
+      scheduledAt: undefined,
     },
   });
 
@@ -124,14 +140,23 @@ export function AppointmentForm() {
               <InputGroupAddon>
                 <Phone className="size-5 text-content-brand" />
               </InputGroupAddon>
-              <IMaskInput
-                id="phone"
-                placeholder="(00) 00000-0000"
-                mask="(00) 00000-0000"
-                data-slot="input-group-control"
-                aria-invalid={!!form.formState.errors.phone}
-                className={inputGroupInputStyles}
-                {...form.register('phone')}
+              <Controller
+                name="phone"
+                control={form.control}
+                render={({ field }) => (
+                  <IMaskInput
+                    id="phone"
+                    placeholder="(00) 00000-0000"
+                    mask="(00) 00000-0000"
+                    unmask
+                    data-slot="input-group-control"
+                    aria-invalid={!!form.formState.errors.phone}
+                    className={inputGroupInputStyles}
+                    value={field.value}
+                    onAccept={(value) => field.onChange(value)}
+                    onBlur={field.onBlur}
+                  />
+                )}
               />
             </InputGroup>
             <FieldError
@@ -158,6 +183,59 @@ export function AppointmentForm() {
               }
             />
           </Field>
+
+          <Controller
+            name="scheduledAt"
+            control={form.control}
+            render={({ field }) => (
+              <Field>
+                <FieldLabel htmlFor="scheduledAt">Data</FieldLabel>
+                <Popover>
+                  <PopoverTrigger
+                    render={
+                      <Button
+                        variant="outline"
+                        data-empty={!field.value}
+                        className={cn(
+                          'w-full justify-between text-left font-normal',
+                          !field.value && 'text-content-secondary'
+                        )}
+                      >
+                        <div className="flex items-center gap-2">
+                          <CalendarIcon
+                            size={20}
+                            className="text-content-brand"
+                          />
+                          {field.value ? (
+                            format(field.value, 'dd/MM/yyyy')
+                          ) : (
+                            <span>Selecione uma data</span>
+                          )}
+                        </div>
+                        <ChevronDownIcon className="opacity-50 size-4" />
+                      </Button>
+                    }
+                  />
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      defaultMonth={field.value}
+                      disabled={(date) => date < startOfToday()}
+                    />
+                  </PopoverContent>
+                </Popover>
+                <FieldError
+                  errors={
+                    form.formState.errors.scheduledAt
+                      ? [form.formState.errors.scheduledAt]
+                      : []
+                  }
+                />
+              </Field>
+            )}
+          />
 
           <Button variant="brand" type="submit" className="mt-2 self-end">
             Agendar
