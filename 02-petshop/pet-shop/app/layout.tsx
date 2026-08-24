@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Inter_Tight } from 'next/font/google';
 import './styles/globals.css';
 import { cn } from '@/lib/utils';
+import { Toaster } from '@/components/ui/toast';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -31,7 +32,10 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         interTight.variable
       )}
     >
-      <body className="min-h-full flex flex-col container">{children}</body>
+      <body className="min-h-full flex flex-col container">
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }

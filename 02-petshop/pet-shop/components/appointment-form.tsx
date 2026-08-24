@@ -24,6 +24,7 @@ import {
   CalendarIcon,
   ChevronDownIcon,
   Clock,
+  Loader2,
   PawPrint,
   Phone,
   User,
@@ -40,6 +41,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
+import { toast } from './ui/toast';
 
 const appointmentFormSchema = z
   .object({
@@ -69,7 +71,22 @@ const appointmentFormSchema = z
 type AppointmentFormData = z.infer<typeof appointmentFormSchema>;
 
 function onSubmit(data: AppointmentFormData) {
-  console.log(data);
+  const [hour, minute] = data.time.split(':');
+  const scheduledDateTime = new Date(data.scheduledAt);
+  scheduledDateTime.setHours(Number(hour));
+  scheduledDateTime.setMinutes(Number(minute));
+
+  const appointmentData = {
+    ...data,
+    scheduledAt: scheduledDateTime,
+  };
+
+  toast.add({
+    description: 'Agendamento criado com sucesso.',
+    type: 'success',
+  });
+
+  console.log('Agendamento realizado:', appointmentData);
 }
 
 export function AppointmentForm() {
@@ -81,6 +98,7 @@ export function AppointmentForm() {
       phone: '',
       description: '',
       scheduledAt: undefined,
+      time: '',
     },
   });
 
@@ -261,19 +279,25 @@ export function AppointmentForm() {
 
             <Field>
               <FieldLabel htmlFor="time">Hora</FieldLabel>
-              <Select>
-                <SelectTrigger>
-                  <Clock className="size-4 text-content-brand" />
-                  <SelectValue placeholder="--:--" />
-                </SelectTrigger>
-                <SelectContent>
-                  {TIME_OPTIONS.map((time) => (
-                    <SelectItem key={time} value={time}>
-                      {time}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Controller
+                name="time"
+                control={form.control}
+                render={({ field }) => (
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger aria-invalid={!!form.formState.errors.time}>
+                      <Clock className="size-4 text-content-brand" />
+                      <SelectValue placeholder="--:--" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {TIME_OPTIONS.map((time) => (
+                        <SelectItem key={time} value={time}>
+                          {time}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
               <FieldError
                 errors={
                   form.formState.errors.time ? [form.formState.errors.time] : []
@@ -281,8 +305,17 @@ export function AppointmentForm() {
               />
             </Field>
           </div>
-          <Button variant="brand" type="submit" className="mt-2 self-end">
-            Agendar
+          <Button
+            variant="brand"
+            type="submit"
+            className="mt-2 self-end min-w-23"
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting ? (
+              <Loader2 size={16} className="animate-spin" />
+            ) : (
+              'Agendar'
+            )}
           </Button>
         </form>
       </DialogContent>
