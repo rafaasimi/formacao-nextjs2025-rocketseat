@@ -42,6 +42,7 @@ import {
   SelectValue,
 } from './ui/select';
 import { toast } from './ui/toast';
+import { createAppointment } from '@/app/actions';
 
 const appointmentFormSchema = z
   .object({
@@ -70,7 +71,7 @@ const appointmentFormSchema = z
 
 type AppointmentFormData = z.infer<typeof appointmentFormSchema>;
 
-function onSubmit(data: AppointmentFormData) {
+async function onSubmit(data: AppointmentFormData) {
   const [hour, minute] = data.time.split(':');
   const scheduledDateTime = new Date(data.scheduledAt);
   scheduledDateTime.setHours(Number(hour));
@@ -80,6 +81,8 @@ function onSubmit(data: AppointmentFormData) {
     ...data,
     scheduledAt: scheduledDateTime,
   };
+
+  await createAppointment(appointmentData);
 
   toast.add({
     description: 'Agendamento criado com sucesso.',

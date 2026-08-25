@@ -7,58 +7,10 @@ import {
 import prisma from '@/lib/prisma';
 import { AppointmentForm } from '@/components/appointment-form';
 
-const appointments = [
-  {
-    id: 1,
-    petName: 'Thor',
-    tutorName: 'Carlos',
-    description: 'Vacinação',
-    phone: '1234567890',
-    scheduledAt: new Date('2025-08-17T10:00:00'),
-  },
-  {
-    id: 2,
-    petName: 'Luna',
-    tutorName: 'Fernanda',
-    description: 'Tosa higiênica',
-    phone: '1234567890',
-    scheduledAt: new Date('2025-08-17T11:00:00'),
-  },
-  {
-    id: 3,
-    petName: 'Mel',
-    tutorName: 'Patrícia',
-    description: 'Retorno clínico',
-    phone: '1234567890',
-    scheduledAt: new Date('2025-08-17T13:00:00'),
-  },
-  {
-    id: 4,
-    petName: 'Bob',
-    tutorName: 'Ricardo',
-    description: 'Banho e secagem',
-    phone: '1234567890',
-    scheduledAt: new Date('2025-08-17T14:00:00'),
-  },
-  {
-    id: 5,
-    petName: 'Pipoca',
-    tutorName: 'Aline',
-    description: 'Corte de unhas',
-    phone: '1234567890',
-    scheduledAt: new Date('2025-08-17T15:00:00'),
-  },
-  {
-    id: 6,
-    petName: 'Simba',
-    tutorName: 'Gustavo',
-    description: 'Avaliação odontológica',
-    phone: '1234567890',
-    scheduledAt: new Date('2025-08-17T19:00:00'),
-  },
-];
-
-const businessHours = {
+const businessHours: Record<
+  AppointmentPeriodTime,
+  { start: number; end: number }
+> = {
   morning: { start: 9, end: 12 },
   afternoon: { start: 13, end: 18 },
   night: { start: 19, end: 21 },
@@ -91,46 +43,52 @@ function normalizeAppointments(appointments: Omit<Appointment, 'period'>[]) {
 }
 
 function groupAppointmentsByPeriod(appointments: Appointment[]) {
-  return appointments.reduce<{
-    morning: Appointment[];
-    afternoon: Appointment[];
-    night: Appointment[];
-  }>(
-    (acc, appointment) => {
-      acc[appointment.period].push(appointment);
-      return acc;
-    },
-    { morning: [], afternoon: [], night: [] }
-  );
+  const grouped: Record<AppointmentPeriodTime, Appointment[]> = {
+    morning: [],
+    afternoon: [],
+    night: [],
+  };
+
+  for (const appointment of appointments) {
+    grouped[appointment.period].push(appointment);
+  }
+
+  return grouped;
 }
 
-const normalizedAppointments = normalizeAppointments(appointments);
-const { morning, afternoon, night } = groupAppointmentsByPeriod(
-  normalizedAppointments
-);
-
-const periods: AppointmentPeriod[] | null = [
-  {
-    title: 'Manhã',
-    type: 'morning',
-    timeRange: `${businessHours.morning.start}h-${businessHours.morning.end}h`,
-    appointments: morning,
-  },
-  {
-    title: 'Tarde',
-    type: 'afternoon',
-    timeRange: `${businessHours.afternoon.start}h-${businessHours.afternoon.end}h`,
-    appointments: afternoon,
-  },
-  {
-    title: 'Noite',
-    type: 'night',
-    timeRange: `${businessHours.night.start}h-${businessHours.night.end}h`,
-    appointments: night,
-  },
-];
+function getPeriods(
+  grouped: Record<AppointmentPeriodTime, Appointment[]>
+): AppointmentPeriod[] {
+  return [
+    {
+      title: 'Manhã',
+      type: 'morning',
+      timeRange: `${businessHours.morning.start}h-${businessHours.morning.end}h`,
+      appointments: grouped.morning,
+    },
+    {
+      title: 'Tarde',
+      type: 'afternoon',
+      timeRange: `${businessHours.afternoon.start}h-${businessHours.afternoon.end}h`,
+      appointments: grouped.afternoon,
+    },
+    {
+      title: 'Noite',
+      type: 'night',
+      timeRange: `${businessHours.night.start}h-${businessHours.night.end}h`,
+      appointments: grouped.night,
+    },
+  ];
+}
 
 export default async function Home() {
+  const appointments = await prisma.appointment.findMany();
+  const normalizedAppointments = normalizeAppointments(appointments);
+  const groupedAppointments = groupAppointmentsByPeriod(normalizedAppointments);
+  const periods = getPeriods(groupedAppointments);
+
+  console.log(appointments);
+
   return (
     <div className="bg-background-primary px-5 py-3 md:px-20 md:py-15.5 mb-32 md:mb-0">
       <div className="flex flex-col gap-3 items-center md:flex-row mb-8">
@@ -145,13 +103,12 @@ export default async function Home() {
       </div>
 
       <div className="flex flex-col gap-3">
-        {periods &&
-          periods.map((period) => (
-            <PeriodSection key={period.type} period={period} />
-          ))}
+        {periods.map((period) => (
+          <PeriodSection key={period.type} period={period} />
+        ))}
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 flex justify-center bg-[#23242C] py-[18px] px-6 md:bottom-6 md:right-6 md:left-auto md:top-auto md:w-auto md:bg-transparent md:p-0">
+      <div className="fixed bottom-0 left-0 right-0 flex justify-center bg-background-tertiary py-4.5 px-6 md:bottom-6 md:right-6 md:left-auto md:top-auto md:w-auto md:bg-transparent md:p-0">
         <AppointmentForm />
       </div>
     </div>
