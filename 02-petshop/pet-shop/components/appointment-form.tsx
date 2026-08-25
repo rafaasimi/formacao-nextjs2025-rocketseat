@@ -69,31 +69,10 @@ const appointmentFormSchema = z
     { path: ['time'], error: 'O horário não pode ser no passado' }
   );
 
-type AppointmentFormData = z.infer<typeof appointmentFormSchema>;
-
-async function onSubmit(data: AppointmentFormData) {
-  const [hour, minute] = data.time.split(':');
-  const scheduledDateTime = new Date(data.scheduledAt);
-  scheduledDateTime.setHours(Number(hour));
-  scheduledDateTime.setMinutes(Number(minute));
-
-  const appointmentData = {
-    ...data,
-    scheduledAt: scheduledDateTime,
-  };
-
-  await createAppointment(appointmentData);
-
-  toast.add({
-    description: 'Agendamento criado com sucesso.',
-    type: 'success',
-  });
-
-  console.log('Agendamento realizado:', appointmentData);
-}
+type AppointmentFormValues = z.infer<typeof appointmentFormSchema>;
 
 export function AppointmentForm() {
-  const form = useForm<AppointmentFormData>({
+  const form = useForm<AppointmentFormValues>({
     resolver: zodResolver(appointmentFormSchema),
     defaultValues: {
       tutorName: '',
@@ -104,6 +83,37 @@ export function AppointmentForm() {
       time: '',
     },
   });
+
+  async function onSubmit(data: AppointmentFormValues) {
+    const [hour, minute] = data.time.split(':');
+    const scheduledDateTime = new Date(data.scheduledAt);
+    scheduledDateTime.setHours(Number(hour));
+    scheduledDateTime.setMinutes(Number(minute));
+
+    const appointmentData = {
+      ...data,
+      scheduledAt: scheduledDateTime,
+    };
+
+    const result = await createAppointment(appointmentData);
+
+    if (result?.error) {
+      toast.add({
+        description: result.error,
+        type: 'error',
+      });
+      return;
+    }
+
+    toast.add({
+      description: 'Agendamento criado com sucesso.',
+      type: 'success',
+    });
+
+    form.reset();
+
+    console.log('Agendamento realizado:', appointmentData);
+  }
 
   return (
     <Dialog>

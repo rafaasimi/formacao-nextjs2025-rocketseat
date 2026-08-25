@@ -13,7 +13,9 @@ const appointmentSchema = z.object({
 
 type AppointmentData = z.infer<typeof appointmentSchema>;
 
-export async function createAppointment(data: AppointmentData) {
+export async function createAppointment(
+  data: AppointmentData
+): Promise<{ error?: string }> {
   try {
     const parsedData = appointmentSchema.parse(data);
 
@@ -43,7 +45,10 @@ export async function createAppointment(data: AppointmentData) {
     await prisma.appointment.create({
       data: parsedData,
     });
+
+    return {};
   } catch (error) {
     console.error(error);
+    return { error: (error as Error).message };
   }
 }
