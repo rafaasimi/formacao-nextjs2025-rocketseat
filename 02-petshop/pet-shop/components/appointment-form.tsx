@@ -42,7 +42,7 @@ import {
   SelectValue,
 } from './ui/select';
 import { toast } from './ui/toast';
-import { createAppointment } from '@/app/actions';
+import { createAppointment, updateAppointment } from '@/app/actions';
 import { useEffect, useState } from 'react';
 import { Appointment } from '@/app/types/appointment';
 
@@ -98,16 +98,21 @@ export function AppointmentForm({
 
   async function onSubmit(data: AppointmentFormValues) {
     const [hour, minute] = data.time.split(':');
-    const scheduledDateTime = new Date(data.scheduledAt);
-    scheduledDateTime.setHours(Number(hour));
-    scheduledDateTime.setMinutes(Number(minute));
+    const formattedDate = data.scheduledAt.toISOString().split('T')[0];
+    const scheduledDateTime = new Date(
+      `${formattedDate}T${hour}:${minute}:00-03:00`
+    );
 
     const appointmentData = {
       ...data,
       scheduledAt: scheduledDateTime,
     };
 
-    const result = await createAppointment(appointmentData);
+    const isEdit = !!appointment?.id;
+
+    const result = isEdit
+      ? await updateAppointment(appointment.id, appointmentData)
+      : await createAppointment(appointmentData);
 
     if (result?.error) {
       toast.add({
@@ -118,7 +123,7 @@ export function AppointmentForm({
     }
 
     toast.add({
-      description: 'Agendamento criado com sucesso.',
+      description: `Agendamento ${isEdit ? 'atualizado' : 'criado'} com sucesso!`,
       type: 'success',
     });
 
@@ -130,7 +135,17 @@ export function AppointmentForm({
 
   useEffect(() => {
     if (appointment) {
-      form.reset(appointment);
+      const scheduledDate = new Date(appointment.scheduledAt);
+      const time = `${scheduledDate.getHours().toString().padStart(2, '0')}:${scheduledDate.getMinutes().toString().padStart(2, '0')}`;
+
+      form.reset({
+        tutorName: appointment.tutorName,
+        petName: appointment.petName,
+        phone: appointment.phone,
+        description: appointment.description,
+        scheduledAt: scheduledDate,
+        time,
+      });
     }
   }, []);
 
