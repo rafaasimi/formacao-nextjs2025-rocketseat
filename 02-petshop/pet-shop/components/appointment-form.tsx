@@ -43,7 +43,8 @@ import {
 } from './ui/select';
 import { toast } from './ui/toast';
 import { createAppointment } from '@/app/actions';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Appointment } from '@/app/types/appointment';
 
 const appointmentFormSchema = z
   .object({
@@ -72,7 +73,15 @@ const appointmentFormSchema = z
 
 type AppointmentFormValues = z.infer<typeof appointmentFormSchema>;
 
-export function AppointmentForm() {
+type AppointmentFormProps = {
+  children?: React.ReactElement;
+  appointment?: Appointment;
+};
+
+export function AppointmentForm({
+  children,
+  appointment,
+}: AppointmentFormProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm<AppointmentFormValues>({
@@ -119,15 +128,16 @@ export function AppointmentForm() {
     console.log('Agendamento realizado:', appointmentData);
   }
 
+  useEffect(() => {
+    if (appointment) {
+      form.reset(appointment);
+    }
+  }, []);
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger
-        render={
-          <Button variant="brand" className="uppercase">
-            Novo agendamento
-          </Button>
-        }
-      />
+      {children && <DialogTrigger render={children} />}
+
       <DialogContent
         variant="appointment"
         overlayVariant="blurred"
@@ -330,6 +340,8 @@ export function AppointmentForm() {
           >
             {form.formState.isSubmitting ? (
               <Loader2 size={16} className="animate-spin" />
+            ) : appointment ? (
+              'Editar'
             ) : (
               'Agendar'
             )}

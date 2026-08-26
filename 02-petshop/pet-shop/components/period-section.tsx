@@ -1,6 +1,8 @@
 import { AppointmentPeriod } from '@/app/types/appointment';
-import { CloudSunIcon, HazeIcon, MoonStarIcon } from 'lucide-react';
+import { CloudSunIcon, HazeIcon, MoonStarIcon, Pen } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
+import { AppointmentForm } from './appointment-form';
+import { Button } from './ui/button';
 
 type PeriodSectionProps = {
   period: AppointmentPeriod;
@@ -57,9 +59,14 @@ export function PeriodSection({ period }: PeriodSectionProps) {
                   </span>
                 </div>
                 <div className="text-end md:text-start">
-                  <span className="text-content-tertiary">
-                    Remover agendamento
-                  </span>
+                  <AppointmentForm
+                    appointment={appointment}
+                    children={
+                      <Button variant="edit" size={'icon'}>
+                        <Pen size={16} />
+                      </Button>
+                    }
+                  />
                 </div>
               </div>
             ))}
