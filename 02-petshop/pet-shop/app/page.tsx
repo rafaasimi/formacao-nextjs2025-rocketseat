@@ -7,6 +7,7 @@ import {
 import prisma from '@/lib/prisma';
 import { AppointmentForm } from '@/components/appointment-form';
 import { Button } from '@/components/ui/button';
+import { endOfDay, parseISO, startOfDay } from 'date-fns';
 
 const businessHours: Record<
   AppointmentPeriodTime,
@@ -82,8 +83,26 @@ function getPeriods(
   ];
 }
 
-export default async function Home() {
-  const appointments = await prisma.appointment.findMany();
+type HomeProps = {
+  searchParams: Promise<{ date?: string }>;
+};
+
+export default async function Home({ searchParams }: HomeProps) {
+  const { date } = await searchParams;
+  const selectedDate = date ? parseISO(date) : new Date();
+
+  const appointments = await prisma.appointment.findMany({
+    where: {
+      scheduledAt: {
+        gte: startOfDay(selectedDate),
+        lte: endOfDay(selectedDate),
+      },
+    },
+    orderBy: {
+      scheduledAt: 'asc',
+    },
+  });
+
   const normalizedAppointments = normalizeAppointments(appointments);
   const groupedAppointments = groupAppointmentsByPeriod(normalizedAppointments);
   const periods = getPeriods(groupedAppointments);
