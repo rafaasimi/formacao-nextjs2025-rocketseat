@@ -1,8 +1,31 @@
+'use client';
+
 import { AppointmentPeriod } from '@/app/types/appointment';
-import { CloudSunIcon, HazeIcon, MoonStarIcon, Pen } from 'lucide-react';
+import {
+  CloudSunIcon,
+  HazeIcon,
+  Loader2,
+  MoonStarIcon,
+  Pen,
+  Trash2,
+} from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
 import { AppointmentForm } from './appointment-form';
 import { Button } from './ui/button';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from './ui/alert-dialog';
+import { useState } from 'react';
+import { deleteAppointment } from '@/app/actions';
+import { toast } from './ui/toast';
 
 type PeriodSectionProps = {
   period: AppointmentPeriod;
@@ -15,6 +38,32 @@ const periodIcons = {
 };
 
 export function PeriodSection({ period }: PeriodSectionProps) {
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  async function handleDelete(periodId: number) {
+    setIsDeleting(true);
+
+    const result = await deleteAppointment(periodId);
+
+    if (result?.error) {
+      console.error(result.error);
+      toast.add({
+        description: result.error,
+        type: 'error',
+      });
+
+      setIsDeleting(false);
+      return;
+    }
+
+    toast.add({
+      description: 'Agendamento removido com sucesso.',
+      type: 'success',
+    });
+
+    setIsDeleting(false);
+  }
+
   return (
     <section className="bg-background-tertiary rounded-[10px]">
       <header className="flex items-center justify-between px-5 py-3.5 border-b border-[#2E2C30]">
@@ -58,7 +107,7 @@ export function PeriodSection({ period }: PeriodSectionProps) {
                     {appointment.description}
                   </span>
                 </div>
-                <div className="text-end md:text-start">
+                <div className="text-end md:text-start space-x-2">
                   <AppointmentForm
                     appointment={appointment}
                     children={
@@ -67,6 +116,42 @@ export function PeriodSection({ period }: PeriodSectionProps) {
                       </Button>
                     }
                   />
+
+                  <AlertDialog>
+                    <AlertDialogTrigger
+                      render={
+                        <Button variant="remove" size={'icon'}>
+                          <Trash2 size={16} />
+                        </Button>
+                      }
+                    />
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Remover agendamento</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Tem certeza que deseja remover este agendamento? Esa
+                          ação não pode ser desfeita.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel variant="outline">
+                          Cancelar
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          className="md:w-28"
+                          variant="destructive"
+                          onClick={() => handleDelete(appointment.id)}
+                          disabled={isDeleting}
+                        >
+                          {isDeleting ? (
+                            <Loader2 className="size-4 animate-spin" />
+                          ) : (
+                            'Remover'
+                          )}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </div>
             ))}

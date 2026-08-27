@@ -101,3 +101,32 @@ export async function updateAppointment(id: number, data: AppointmentData) {
     return { error: (error as Error).message };
   }
 }
+
+export async function deleteAppointment(id: number) {
+  try {
+    const existingAppointment = await prisma.appointment.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!existingAppointment) {
+      throw new Error('Agendamento não encontrado.');
+    }
+
+    await prisma.appointment.delete({
+      where: {
+        id,
+      },
+    });
+
+    revalidatePath('/');
+
+    return {};
+  } catch (error) {
+    console.error(error);
+    return {
+      error: (error as Error).message || 'Erro ao deletar agendamento.',
+    };
+  }
+}
