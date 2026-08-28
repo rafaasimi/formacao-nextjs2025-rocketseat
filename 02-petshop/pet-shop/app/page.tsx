@@ -8,6 +8,8 @@ import prisma from '@/lib/prisma';
 import { AppointmentForm } from '@/components/appointment-form';
 import { Button } from '@/components/ui/button';
 import { endOfDay, parseISO, startOfDay } from 'date-fns';
+import { DatePicker } from '@/components/date-picker';
+import Image from 'next/image';
 
 const businessHours: Record<
   AppointmentPeriodTime,
@@ -107,11 +109,14 @@ export default async function Home({ searchParams }: HomeProps) {
   const groupedAppointments = groupAppointmentsByPeriod(normalizedAppointments);
   const periods = getPeriods(groupedAppointments);
 
-  console.log(appointments);
-
   return (
     <div className="bg-background-primary px-5 py-3 md:px-20 md:py-15.5 mb-32 md:mb-0">
-      <div className="flex flex-col gap-3 items-center md:flex-row mb-8">
+      <div className="fixed flex items-center gap-1 top-0 left-0 px-5 py-3 uppercase rounded-br-xl bg-[#2e2c30] text-[#9282fa] font-bold">
+        <Image src="/logo.svg" width={20} height={20} alt="Mundo Pet" />
+        Mundo Pet
+      </div>
+
+      <div className="flex flex-col gap-3 md:items-center md:flex-row mb-8 mt-14 md:mt-5">
         <div className="flex-1">
           <h1 className="text-title-size text-content-primary">Sua agenda</h1>
           <p className="text-paragraph-medium-size text-content-secondary">
@@ -119,7 +124,9 @@ export default async function Home({ searchParams }: HomeProps) {
           </p>
         </div>
 
-        <div>DATE PICKER</div>
+        <div>
+          <DatePicker />
+        </div>
       </div>
 
       <div className="flex flex-col gap-3">
