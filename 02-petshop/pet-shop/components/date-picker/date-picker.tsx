@@ -6,13 +6,14 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
-import { Button } from './ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { Button } from '../ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { addDays, format, isValid } from 'date-fns';
 import { ptBR } from 'date-fns/locale/pt-BR';
-import { Calendar } from './ui/calendar';
+import { Calendar } from '../ui/calendar';
+import { NavigationButton } from './navigation-button';
 
 export function DatePicker() {
   const router = useRouter();
@@ -63,9 +64,12 @@ export function DatePicker() {
 
   return (
     <div className="flex items-center gap-2">
-      <Button variant={'outline'} onClick={() => handleDateChange(-1)}>
+      <NavigationButton
+        tooltipText="Data anterior"
+        onClick={() => handleDateChange(-1)}
+      >
         <ChevronLeft className="size-4" />
-      </Button>
+      </NavigationButton>
 
       <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
         <PopoverTrigger
@@ -98,9 +102,12 @@ export function DatePicker() {
         </PopoverContent>
       </Popover>
 
-      <Button variant={'outline'} onClick={() => handleDateChange(1)}>
+      <NavigationButton
+        tooltipText="Data seguinte"
+        onClick={() => handleDateChange(1)}
+      >
         <ChevronRight className="size-4" />
-      </Button>
+      </NavigationButton>
     </div>
   );
 }

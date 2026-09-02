@@ -8,7 +8,7 @@ import prisma from '@/lib/prisma';
 import { AppointmentForm } from '@/components/appointment-form';
 import { Button } from '@/components/ui/button';
 import { endOfDay, parseISO, startOfDay } from 'date-fns';
-import { DatePicker } from '@/components/date-picker';
+import { DatePicker } from '@/components/date-picker/date-picker';
 import Image from 'next/image';
 
 const businessHours: Record<
