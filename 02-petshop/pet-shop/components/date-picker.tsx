@@ -1,12 +1,18 @@
 'use client';
 
-import { Calendar, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  Calendar as CalendarIcon,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react';
 import { Button } from './ui/button';
-import { Popover, PopoverTrigger } from './ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { addDays, format, isValid } from 'date-fns';
 import { ptBR } from 'date-fns/locale/pt-BR';
+import { Calendar } from './ui/calendar';
 
 export function DatePicker() {
   const router = useRouter();
@@ -42,6 +48,11 @@ export function DatePicker() {
     router.push(`${pathname}?${newParams.toString()}`);
   }
 
+  function handleDateSelect(selectedDate: Date | undefined) {
+    updateURLWithDate(selectedDate);
+    setIsPopoverOpen(false);
+  }
+
   useEffect(() => {
     const newDate = getInitialDate();
 
@@ -64,7 +75,7 @@ export function DatePicker() {
               className="w-min[180px] justify-between text-left font-normal bg-transparent border-border-primary text-content-primary hover:bg-background-tertiary hover:border-border-secondary hover:text-content-primary focus-visible:ring-offset-0 focus-visible:ring-1 focus-visible:ring-border-brand focus:border-border-brand focus-visible:border-border-brand"
             >
               <div className="flex items-center gap-2">
-                <Calendar className="size-5 text-content-brand" />
+                <CalendarIcon className="size-5 text-content-brand" />
                 <span className="text-content-secondary">
                   {date
                     ? format(date, 'P', { locale: ptBR })
@@ -75,6 +86,16 @@ export function DatePicker() {
             </Button>
           }
         />
+
+        <PopoverContent className="w-auto p-0">
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={handleDateSelect}
+            locale={ptBR}
+            autoFocus
+          />
+        </PopoverContent>
       </Popover>
 
       <Button variant={'outline'} onClick={() => handleDateChange(1)}>
