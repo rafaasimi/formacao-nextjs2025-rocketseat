@@ -26,6 +26,7 @@ import {
 import { useState } from 'react';
 import { deleteAppointment } from '@/app/actions';
 import { toast } from './ui/toast';
+import { formatDateTime } from '@/lib/constants';
 
 type PeriodSectionProps = {
   period: AppointmentPeriod;
@@ -92,10 +93,7 @@ export function PeriodSection({ period }: PeriodSectionProps) {
               >
                 <div className="flex gap-4">
                   <span className="text-content-primary min-w-10">
-                    {appointment.scheduledAt.toLocaleTimeString('pt-BR', {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
+                    {formatDateTime(appointment.scheduledAt)}
                   </span>
                   <span className="text-content-secondary md:flex-1">
                     <span className="text-content-primary">

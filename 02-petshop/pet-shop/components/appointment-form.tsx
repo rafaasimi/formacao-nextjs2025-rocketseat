@@ -98,21 +98,23 @@ export function AppointmentForm({
 
   async function onSubmit(data: AppointmentFormValues) {
     const [hour, minute] = data.time.split(':');
-    const formattedDate = data.scheduledAt.toISOString().split('T')[0];
-    const scheduledDateTime = new Date(
-      `${formattedDate}T${hour}:${minute}:00-03:00`
-    );
 
-    const appointmentData = {
-      ...data,
-      scheduledAt: scheduledDateTime,
-    };
+    const scheduledAt = setMinutes(
+      setHours(data.scheduledAt, Number(hour)),
+      Number(minute)
+    );
 
     const isEdit = !!appointment?.id;
 
     const result = isEdit
-      ? await updateAppointment(appointment.id, appointmentData)
-      : await createAppointment(appointmentData);
+      ? await updateAppointment(appointment.id, {
+          ...data,
+          scheduledAt,
+        })
+      : await createAppointment({
+          ...data,
+          scheduledAt,
+        });
 
     if (result?.error) {
       toast.add({
@@ -129,8 +131,6 @@ export function AppointmentForm({
 
     setIsOpen(false);
     form.reset();
-
-    console.log('Agendamento realizado:', appointmentData);
   }
 
   useEffect(() => {

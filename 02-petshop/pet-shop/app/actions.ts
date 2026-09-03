@@ -2,6 +2,7 @@
 
 import {
   APPOINTMENT_ERROR_MESSAGE,
+  formatDateTime,
   isValidAppointmentHour,
 } from '@/lib/constants';
 import prisma from '@/lib/prisma';
@@ -25,8 +26,9 @@ export async function createAppointment(
     const parsedData = appointmentSchema.parse(data);
 
     const { scheduledAt } = parsedData;
+    const hour = parseInt(formatDateTime(scheduledAt));
 
-    if (!isValidAppointmentHour(scheduledAt)) {
+    if (!isValidAppointmentHour(hour)) {
       throw new Error(APPOINTMENT_ERROR_MESSAGE);
     }
 
@@ -58,8 +60,9 @@ export async function updateAppointment(id: number, data: AppointmentData) {
     const parsedData = appointmentSchema.parse(data);
 
     const { scheduledAt } = parsedData;
+    const hour = parseInt(formatDateTime(scheduledAt));
 
-    if (!isValidAppointmentHour(scheduledAt)) {
+    if (!isValidAppointmentHour(hour)) {
       throw new Error(APPOINTMENT_ERROR_MESSAGE);
     }
 
