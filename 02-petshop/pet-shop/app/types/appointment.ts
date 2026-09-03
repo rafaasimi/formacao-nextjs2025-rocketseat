@@ -1,4 +1,5 @@
 import { Appointment as AppointmentPrisma } from '../generated/prisma/client';
+import { AppointmentPeriodTime } from '@/lib/constants';
 
 export type Appointment = {
   period: AppointmentPeriodTime;
@@ -11,4 +12,4 @@ export type AppointmentPeriod = {
   appointments: Appointment[];
 };
 
-export type AppointmentPeriodTime = 'morning' | 'afternoon' | 'night';
+export type { AppointmentPeriodTime };

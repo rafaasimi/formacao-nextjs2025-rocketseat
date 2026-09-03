@@ -1,5 +1,9 @@
 'use server';
 
+import {
+  APPOINTMENT_ERROR_MESSAGE,
+  isValidAppointmentHour,
+} from '@/lib/constants';
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import z from 'zod';
@@ -21,16 +25,9 @@ export async function createAppointment(
     const parsedData = appointmentSchema.parse(data);
 
     const { scheduledAt } = parsedData;
-    const hour = scheduledAt.getHours();
 
-    const isMorning = hour >= 9 && hour < 12;
-    const isAfternoon = hour >= 13 && hour < 18;
-    const isEvening = hour >= 19 && hour < 21;
-
-    if (!(isMorning || isAfternoon || isEvening)) {
-      throw new Error(
-        'Agendamentos só podem ser feitos entre 9h e 12h, 13h e 18h ou 19h e 21h.'
-      );
+    if (!isValidAppointmentHour(scheduledAt)) {
+      throw new Error(APPOINTMENT_ERROR_MESSAGE);
     }
 
     const existingAppointments = await prisma.appointment.findFirst({
@@ -61,16 +58,9 @@ export async function updateAppointment(id: number, data: AppointmentData) {
     const parsedData = appointmentSchema.parse(data);
 
     const { scheduledAt } = parsedData;
-    const hour = scheduledAt.getHours();
 
-    const isMorning = hour >= 9 && hour < 12;
-    const isAfternoon = hour >= 13 && hour < 18;
-    const isEvening = hour >= 19 && hour < 21;
-
-    if (!(isMorning || isAfternoon || isEvening)) {
-      throw new Error(
-        'Agendamentos só podem ser feitos entre 9h e 12h, 13h e 18h ou 19h e 21h.'
-      );
+    if (!isValidAppointmentHour(scheduledAt)) {
+      throw new Error(APPOINTMENT_ERROR_MESSAGE);
     }
 
     const existingAppointments = await prisma.appointment.findFirst({

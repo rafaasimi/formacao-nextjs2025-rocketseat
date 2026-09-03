@@ -1,43 +1,16 @@
 import { PeriodSection } from '@/components/period-section';
-import {
-  Appointment,
-  AppointmentPeriod,
-  AppointmentPeriodTime,
-} from './types/appointment';
+import { Appointment, AppointmentPeriod } from './types/appointment';
 import prisma from '@/lib/prisma';
 import { AppointmentForm } from '@/components/appointment-form';
 import { Button } from '@/components/ui/button';
 import { endOfDay, parseISO, startOfDay } from 'date-fns';
 import { DatePicker } from '@/components/date-picker/date-picker';
 import Image from 'next/image';
-
-const businessHours: Record<
+import {
+  APPOINTMENT_PERIODS,
   AppointmentPeriodTime,
-  { start: number; end: number }
-> = {
-  morning: { start: 9, end: 12 },
-  afternoon: { start: 13, end: 18 },
-  night: { start: 19, end: 21 },
-};
-
-function getAppointmentPeriod(hour: number): AppointmentPeriodTime {
-  if (
-    hour >= businessHours.morning.start &&
-    hour <= businessHours.morning.end
-  ) {
-    return 'morning';
-  }
-  if (
-    hour >= businessHours.afternoon.start &&
-    hour <= businessHours.afternoon.end
-  ) {
-    return 'afternoon';
-  }
-  if (hour >= businessHours.night.start && hour <= businessHours.night.end) {
-    return 'night';
-  }
-  throw new Error(`Horário ${hour}h fora do expediente`);
-}
+  getAppointmentPeriod,
+} from '@/lib/constants';
 
 function normalizeAppointments(appointments: Omit<Appointment, 'period'>[]) {
   return appointments.map((appointment) => ({
@@ -63,26 +36,12 @@ function groupAppointmentsByPeriod(appointments: Appointment[]) {
 function getPeriods(
   grouped: Record<AppointmentPeriodTime, Appointment[]>
 ): AppointmentPeriod[] {
-  return [
-    {
-      title: 'Manhã',
-      type: 'morning',
-      timeRange: `${businessHours.morning.start}h-${businessHours.morning.end}h`,
-      appointments: grouped.morning,
-    },
-    {
-      title: 'Tarde',
-      type: 'afternoon',
-      timeRange: `${businessHours.afternoon.start}h-${businessHours.afternoon.end}h`,
-      appointments: grouped.afternoon,
-    },
-    {
-      title: 'Noite',
-      type: 'night',
-      timeRange: `${businessHours.night.start}h-${businessHours.night.end}h`,
-      appointments: grouped.night,
-    },
-  ];
+  return APPOINTMENT_PERIODS.map(({ type, title, start, end }) => ({
+    title,
+    type,
+    timeRange: `${start}h-${end}h`,
+    appointments: grouped[type],
+  }));
 }
 
 type HomeProps = {
