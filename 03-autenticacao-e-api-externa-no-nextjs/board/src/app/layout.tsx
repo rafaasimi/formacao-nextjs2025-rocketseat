@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Inter } from 'next/font/google';
+import { Inter } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { ReactQueryProvider } from "@/lib/react-query";
 
-const interFont = Inter({ subsets: ['latin'] });
+const interFont = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
@@ -14,12 +14,7 @@ export const metadata: Metadata = {
   description: "Follow the development progress of our entire platform.",
 };
 
-interface RootLayoutProps {
-  children: React.ReactNode;
-  banana: React.ReactNode;
-}
-
-export default function RootLayout({ children, banana }: RootLayoutProps) {
+export default function RootLayout({ children, banana }: LayoutProps<"/">) {
   return (
     <html lang="pt-BR" className={interFont.className}>
       <body className="bg-navy-950 text-navy-50 antialiased">
