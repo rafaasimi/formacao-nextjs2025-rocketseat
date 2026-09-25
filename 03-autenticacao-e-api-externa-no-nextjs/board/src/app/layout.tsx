@@ -14,12 +14,18 @@ export const metadata: Metadata = {
   description: "Follow the development progress of our entire platform.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+interface RootLayoutProps {
+  children: React.ReactNode;
+  banana: React.ReactNode;
+}
+
+export default function RootLayout({ children, banana }: RootLayoutProps) {
   return (
     <html lang="pt-BR" className={interFont.className}>
       <body className="bg-navy-950 text-navy-50 antialiased">
         <ReactQueryProvider>
           <NuqsAdapter>
+            {banana}
             {children}
           </NuqsAdapter>
         </ReactQueryProvider>
