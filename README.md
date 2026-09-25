@@ -19,8 +19,7 @@
 Um blog construído com Next.js e Contentlayer para gerenciamento de conteúdo. O projeto explora a criação de páginas estáticas a partir de arquivos Markdown, com suporte a renderização de código syntax-highlighted e diferentes temas de interface.
 
 **Tecnologias:**
-- **Framework:** Next.js 16
-- **UI Library:** React 19
+- **Framework:** Next.js 16 (React 19)
 - **CMS:** Contentlayer2
 - **Estilização:** Tailwind CSS 4
 - **Componentes:** shadcn/ui
@@ -35,8 +34,7 @@ Um blog construído com Next.js e Contentlayer para gerenciamento de conteúdo. 
 Uma plataforma de links estilo Linktree desenvolvida como desafio prático do módulo de fundamentos. O projeto utiliza Prismic como CMS headless para o gerenciamento dos links, com suporte a modo claro/escuro e interface responsiva.
 
 **Tecnologias:**
-- **Framework:** Next.js 16
-- **UI Library:** React 19
+- **Framework:** Next.js 16 (React 19)
 - **CMS:** Prismic CMS
 - **Estilização:** Tailwind CSS 4
 - **Componentes:** shadcn/ui
@@ -50,9 +48,27 @@ Uma plataforma de links estilo Linktree desenvolvida como desafio prático do m�
 Um sistema de agendamento de serviços para pet shop, construído com foco em_boas práticas de desenvolvimento fullstack. O projeto inclui formulários com validação, integração com banco de dados PostgreSQL via Prisma ORM, e interface completa para gerenciamento de agendamentos.
 
 **Tecnologias:**
-- **Framework:** Next.js 16
-- **UI Library:** React 19
+- **Framework:** Next.js 16 (React 19)
 - **Banco de Dados:** PostgreSQL + Prisma ORM
 - **Formulários:** React Hook Form + Zod
 - **Estilização:** Tailwind CSS 4
 - **Componentes:** shadcn/ui
+
+---
+
+### 4. Board Kanban
+
+![Board Kanban](.github/board.png)
+
+Um board estilo Kanban para gerenciamento de issues, desenvolvido como desafio final do curso. A aplicação traz colunas de quadrantes, cards com criação e edição, curtidas, comentários e filtros, além de autenticação completa e uma API REST tipada com documentação interativa.
+
+**Tecnologias:**
+- **Framework:** Next.js 16 (React 19)
+- **Autenticação:** Better Auth
+- **API:** Hono + @hono/zod-openapi + Scalar
+- **Banco de Dados:** PostgreSQL + Drizzle ORM
+- **Data Fetching:** TanStack Query + nuqs
+- **Validação:** Zod + React Hook Form
+- **Estilização:** Tailwind CSS 4
+- **Componentes:** shadcn/ui + Base UI
+- **Linting/Format:** Biome
