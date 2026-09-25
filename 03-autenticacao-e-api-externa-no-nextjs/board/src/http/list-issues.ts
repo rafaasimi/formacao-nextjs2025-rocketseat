@@ -1,11 +1,16 @@
 import { IssuesListResponseSchema } from '@/api/routes/list-issues'
 import { clientEnv } from '@/env';
+import { cacheLife } from 'next/cache';
+import { setTimeout } from 'node:timers/promises';
 
 interface ListIssuesParams {
     search?: string;
 }
 
 export async function listIssues({ search }: ListIssuesParams) {
+    'use cache' // default: 15 minutes
+    cacheLife('minutes');
+
     const url = new URL('api/issues', clientEnv.NEXT_PUBLIC_API_URL);
 
     if (search) {
